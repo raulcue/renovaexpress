@@ -77,6 +77,46 @@ Abre http://localhost:8080 en el navegador.
 
 ---
 
+## 🔒 Preview privado con StatiCrypt + GitHub Pages
+
+El sitio se publica en GitHub Pages con **toda la web cifrada con contraseña** vía [StatiCrypt](https://github.com/robinmoisson/staticrypt). Funciona 100% en el cliente, sin backend.
+
+### Flujo completo
+
+1. **Edita los HTML normalmente** en la raíz del proyecto.
+2. Cuando quieras publicar, ejecuta:
+   ```bash
+   ./encrypt.sh
+   # o con otra contraseña:
+   PASSWORD="otracontraseña" ./encrypt.sh
+   ```
+   Genera `docs/` con la versión cifrada.
+3. Commitea y haz push:
+   ```bash
+   git add docs encrypt.sh .gitignore .staticrypt.json
+   git commit -m "Build: $(date +%Y-%m-%d)"
+   git push
+   ```
+4. En **GitHub → Settings → Pages**: Source = `Deploy from a branch`, Branch = `main`, Folder = `/docs`.
+5. La URL pública será `https://<usuario>.github.io/<repo>/` y pedirá contraseña.
+
+### Cambiar la contraseña
+
+Edita `encrypt.sh` (variable `PASSWORD`) o pásala en línea:
+```bash
+PASSWORD="nuevaContraseña" ./encrypt.sh
+```
+
+> **Importante:** `.staticrypt.json` contiene el *salt* que mantiene válidas las cookies "Recordarme" entre builds. NO lo borres. Si lo borras, los visitantes con sesión guardada tendrán que reintroducir la contraseña.
+
+### Limitaciones a tener en cuenta
+
+- **StatiCrypt cifra HTML, NO assets.** Las URLs de imágenes/CSS/JS en `docs/assets/` son técnicamente accesibles si alguien las adivina. Para una preview privada esto suele ser suficiente.
+- Si quieres ocultar también el código fuente, el repo debe ser **privado** y necesitas GitHub Pro para Pages (o usa Cloudflare Pages, que sí soporta privados gratis).
+- La contraseña se valida en el navegador, no en el servidor. Suficiente para "preview privada para cliente", no apto para datos sensibles.
+
+---
+
 ## Despliegue
 
 ### Netlify (recomendado)

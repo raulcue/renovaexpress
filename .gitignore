@@ -38,3 +38,9 @@ dist/
 build/
 .next/
 .parcel-cache/
+
+# StatiCrypt
+# NOTA: .staticrypt.json SÍ se commitea (contiene el salt necesario
+# para que las cookies "Recordarme" sigan funcionando entre builds).
+# Solo ignoramos la carpeta temporal de staging.
+.staticrypt-stage/
