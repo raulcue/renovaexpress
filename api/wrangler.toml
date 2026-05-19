@@ -1,0 +1,20 @@
+# Configuración de despliegue del worker Renova Express - Google Reviews
+# Renombra/copia este archivo a wrangler.toml en la raíz del proyecto del worker.
+
+name = "renova-reviews"
+main = "reviews-worker.js"
+compatibility_date = "2026-01-01"
+
+# Variables no sensibles (los secretos se inyectan con `wrangler secret put`)
+[vars]
+ALLOWED_ORIGINS = "https://renovaexpress.com,https://www.renovaexpress.com"
+
+# Secretos a configurar:
+#   wrangler secret put GOOGLE_API_KEY
+#   wrangler secret put PLACE_ID_GIJON
+#   wrangler secret put PLACE_ID_OVIEDO
+
+# Opcional: dominio personalizado
+# [[routes]]
+# pattern = "api.renovaexpress.com/reviews"
+# zone_name = "renovaexpress.com"

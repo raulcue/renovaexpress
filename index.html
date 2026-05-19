@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon-192.png">
+<link rel="apple-touch-icon" href="assets/img/favicon-192.png">
+<title>Renova Express — Centro psicotécnico en Gijón y Oviedo · sin cita previa</title>
+<meta name="description" content="Centro de Reconocimiento de Conductores homologado por la DGT en Asturias. Renueva tu carnet de conducir en Gijón (CC Ronda Roces) u Oviedo (CC Salesas) sin cita previa, con parking gratuito y tramitación inmediata.">
+<meta name="theme-color" content="#007E85">
+<link rel="canonical" href="https://renovaexpress.com/">
+
+<!-- Endpoint del Cloudflare Worker que proxea Google Places API.
+     Sustituye la URL por la real cuando despliegues el worker.
+     Si no se configura, los placeholders se quedan visibles. -->
+<meta name="reviews-endpoint" content="https://api.example.com/reviews">
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Renova Express — Centro psicotécnico en Gijón y Oviedo">
+<meta property="og:description" content="Renueva tu carnet de conducir en Asturias sin cita previa. Tramitación inmediata con la DGT, parking gratis, dentro de centros comerciales.">
+<meta property="og:url" content="https://renovaexpress.com/">
+<meta property="og:image" content="https://renovaexpress.com/assets/img/servicio-conducir.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Renova Express — Psicotécnicos en Asturias">
+<meta name="twitter:description" content="Centro homologado DGT en Gijón y Oviedo. Sin cita previa, sin foto, en 15 minutos.">
+
+<!-- Fuentes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap">
+
+<!-- Iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+<!-- Swiper / AOS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
+<link rel="stylesheet" href="assets/css/main.css">
+
+<!-- Schema.org: MedicalBusiness + LocalBusiness -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "@id": "https://renovaexpress.com/#organization",
+  "name": "Renova Express Psicotécnicos S.L.",
+  "url": "https://renovaexpress.com/",
+  "image": "https://renovaexpress.com/assets/img/og-cover.jpg",
+  "telephone": "+34985059067",
+  "email": "crcrenovaexpress@gmail.com",
+  "priceRange": "€€",
+  "areaServed": [{"@type":"AdministrativeArea","name":"Asturias"}],
+  "medicalSpecialty": ["Physical Medicine and Rehabilitation","Psychology"],
+  "location": [
+    {
+      "@type": "MedicalBusiness",
+      "@id": "https://renovaexpress.com/centros/gijon",
+      "name": "Renova Express Gijón",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Carretera AS-II, 1306",
+        "addressLocality": "Gijón",
+        "postalCode": "33211",
+        "addressRegion": "Asturias",
+        "addressCountry": "ES"
+      },
+      "telephone": "+34985059067",
+      "identifier": "CRC C.2.5.10/6701/1"
+    },
+    {
+      "@type": "MedicalBusiness",
+      "@id": "https://renovaexpress.com/centros/oviedo",
+      "name": "Renova Express Oviedo",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle General Elorza, 75, Planta 0, Centro Comercial Salesas",
+        "addressLocality": "Oviedo",
+        "postalCode": "33001",
+        "addressRegion": "Asturias",
+        "addressCountry": "ES"
+      },
+      "telephone": "+34984019079",
+      "identifier": "CRC C.2.5.10/6919/1"
+    }
+  ],
+  "sameAs": ["https://www.facebook.com/CentroRenovaExpress"]
+}
+</script>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<!-- Barra de progreso de scroll -->
+<div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__bar"></div></div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" role="banner">
+  <div class="container nav">
+    <a href="/" class="nav__brand" aria-label="Renova Express — inicio"><img src="assets/img/logo-renovaexpress.png" alt="Renova Express - Centro psicotécnico en Asturias" class="nav__brand-img nav__brand-img--light" width="180" height="42"><img src="assets/img/logo-renovaexpress-blanco.png" alt="" aria-hidden="true" class="nav__brand-img nav__brand-img--dark" width="180" height="42"></a>
+
+    <nav class="nav__list-wrap" aria-label="Principal">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="/" aria-current="page">Inicio</a></li>
+        <li class="nav__dropdown">
+          <a class="nav__link" href="#servicios">Servicios <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></a>
+          <ul class="nav__dropdown-menu" role="menu">
+            <li><a href="servicios/carnet-de-conducir.html"><i class="fa-solid fa-car"></i> Carnet de conducir</a></li>
+            <li><a href="servicios/licencia-armas.html"><i class="fa-solid fa-shield-halved"></i> Licencia de armas</a></li>
+            <li><a href="servicios/licencias-nauticas.html"><i class="fa-solid fa-anchor"></i> Licencias náuticas</a></li>
+            <li><a href="servicios/seguridad-privada.html"><i class="fa-solid fa-user-shield"></i> Seguridad privada</a></li>
+            <li><a href="servicios/animales-peligrosos.html"><i class="fa-solid fa-paw"></i> Animales peligrosos (PPP)</a></li>
+            <li><a href="servicios/operador-grua.html"><i class="fa-solid fa-helmet-safety"></i> Operador de grúa</a></li>
+            <li><a href="servicios/certificados-deportivos.html"><i class="fa-solid fa-person-running"></i> Certificados deportivos</a></li>
+            <li><a href="servicios/certificados-oficiales.html"><i class="fa-solid fa-clipboard-medical"></i> Otros certificados</a></li>
+          </ul>
+        </li>
+        <li class="nav__dropdown">
+          <a class="nav__link" href="#centros">Centros <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></a>
+          <ul class="nav__dropdown-menu" role="menu">
+            <li><a href="centros/gijon.html"><i class="fa-solid fa-location-dot"></i> Gijón · CC Ronda Roces</a></li>
+            <li><a href="centros/oviedo.html"><i class="fa-solid fa-location-dot"></i> Oviedo · CC Salesas</a></li>
+          </ul>
+        </li>
+        <li><a class="nav__link" href="faq.html">FAQ</a></li>
+        <li><a class="nav__link" href="blog/index.html">Blog</a></li>
+        <li><a class="nav__link" href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav__actions">
+      <button class="nav__icon-btn" data-theme-toggle aria-label="Cambiar tema claro/oscuro">
+        <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+      </button>
+      <a class="btn btn--primary btn--sm" href="tel:+34985059067" aria-label="Llamar al centro de Gijón">
+        <i class="fa-solid fa-phone" aria-hidden="true"></i>
+        <span class="nav__cta-text">985 059 067</span>
+      </a>
+      <button class="nav__toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+        <i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<div class="mobile-nav__backdrop" aria-hidden="true"></div>
+<aside class="mobile-nav" aria-label="Menú móvil">
+  <div class="mobile-nav__head">
+    <a href="/" class="nav__brand"><img src="assets/img/logo-renovaexpress.png" alt="Renova Express - Centro psicotécnico en Asturias" class="nav__brand-img nav__brand-img--light" width="180" height="42"><img src="assets/img/logo-renovaexpress-blanco.png" alt="" aria-hidden="true" class="nav__brand-img nav__brand-img--dark" width="180" height="42"></a>
+    <button class="mobile-nav__close nav__icon-btn" aria-label="Cerrar menú"><i class="fa-solid fa-xmark fa-lg"></i></button>
+  </div>
+  <ul class="mobile-nav__list">
+    <li><a href="/"><i class="fa-solid fa-house"></i> Inicio</a></li>
+    <li><a href="servicios/carnet-de-conducir.html"><i class="fa-solid fa-car"></i> Carnet de conducir</a></li>
+    <li><a href="servicios/licencia-armas.html"><i class="fa-solid fa-shield-halved"></i> Licencia de armas</a></li>
+    <li><a href="servicios/licencias-nauticas.html"><i class="fa-solid fa-anchor"></i> Licencias náuticas</a></li>
+    <li><a href="servicios/seguridad-privada.html"><i class="fa-solid fa-user-shield"></i> Seguridad privada</a></li>
+    <li><a href="servicios/animales-peligrosos.html"><i class="fa-solid fa-paw"></i> Animales peligrosos</a></li>
+    <li><a href="servicios/operador-grua.html"><i class="fa-solid fa-helmet-safety"></i> Operador de grúa</a></li>
+    <li><a href="servicios/certificados-deportivos.html"><i class="fa-solid fa-person-running"></i> Deportivos</a></li>
+    <li><a href="servicios/certificados-oficiales.html"><i class="fa-solid fa-clipboard-medical"></i> Otros certificados</a></li>
+    <li><a href="centros/gijon.html"><i class="fa-solid fa-location-dot"></i> Centro Gijón</a></li>
+    <li><a href="centros/oviedo.html"><i class="fa-solid fa-location-dot"></i> Centro Oviedo</a></li>
+    <li><a href="faq.html"><i class="fa-solid fa-circle-question"></i> FAQ</a></li>
+    <li><a href="blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
+    <li><a href="contacto.html"><i class="fa-solid fa-envelope"></i> Contacto</a></li>
+    <li><a href="cita-previa.html"><i class="fa-solid fa-calendar-check"></i> Cita previa</a></li>
+  </ul>
+  <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.5rem">
+    <a class="btn btn--primary" href="tel:+34985059067"><i class="fa-solid fa-phone"></i> Gijón · 985 059 067</a>
+    <a class="btn btn--outline" href="tel:+34984019079"><i class="fa-solid fa-phone"></i> Oviedo · 984 019 079</a>
+  </div>
+</aside>
+
+<main id="main">
+
+<!-- ============ HERO moderno con imagen de fondo (coche) ============ -->
+<section class="hero">
+  <div class="hero__bg" style="background-image:url('assets/img/coche.jpg')" role="img" aria-label="Centro Comercial Ronda Roces (antiguo Alcampo) en Gijón, donde se ubica Renova Express"></div>
+
+  <div class="container hero__grid">
+    <div>
+      <span class="hero__eyebrow"><i class="fa-solid fa-circle-check"></i> Centro homologado DGT · +20 años en Asturias</span>
+      <h1>
+        Renueva tu carnet<br>
+        <span class="typed" data-typed="en Gijón|en Oviedo|sin cita previa|al momento|sin foto"></span>
+      </h1>
+      <p class="hero__lead">
+        Centro psicotécnico pionero en Asturias, integrado en centro comercial. Tramitación inmediata con la DGT, parking gratuito y atención sin cita previa.
+      </p>
+      <div class="hero__ctas">
+        <a class="btn btn--primary btn--lg magnetic magnetic--glow" href="tel:+34985059067" data-magnetic>
+          <i class="fa-solid fa-phone"></i> Llamar ahora · 985 059 067
+        </a>
+        <a class="btn btn--outline btn--lg magnetic" href="#contacto" data-magnetic>
+          <i class="fa-solid fa-envelope"></i> Escríbenos
+        </a>
+      </div>
+      <div class="hero__badges" role="list">
+        <div class="hero__badge"><i class="fa-solid fa-hospital"></i><span>Homologado DGT</span></div>
+        <div class="hero__badge"><i class="fa-solid fa-square-parking"></i><span>Parking gratis</span></div>
+        <div class="hero__badge"><i class="fa-solid fa-clock"></i><span>En 15 minutos</span></div>
+        <div class="hero__badge"><i class="fa-solid fa-ban"></i><span>Sin cita previa</span></div>
+      </div>
+    </div>
+
+    <div class="hero__cards">
+      <a class="hero__minicard" href="centros/gijon.html">
+        <img src="assets/img/ronda-roces.jpg" alt="Centro Comercial Ronda Roces (antiguo CC Ronda Roces) en Gijón" loading="lazy" width="88" height="88">
+        <div class="hero__minicard__meta">
+          <span class="hero__minicard__label">Centro Gijón</span>
+          <div class="hero__minicard__title">CC Ronda Roces</div>
+          <div class="hero__minicard__sub"><i class="fa-solid fa-phone" style="font-size:.75rem"></i> 985 059 067 · sin cita</div>
+          <span class="hero__minicard__partner"><img src="assets/img/logo-ronda-roces.png" alt="" width="18" height="18" aria-hidden="true"> Dentro del CC Ronda Roces</span>
+        </div>
+        <i class="fa-solid fa-arrow-right hero__minicard__arrow"></i>
+      </a>
+      <a class="hero__minicard" href="centros/oviedo.html">
+        <img src="assets/img/cc-salesas.jpg" alt="Centro Comercial Salesas en Oviedo" loading="lazy" width="88" height="88">
+        <div class="hero__minicard__meta">
+          <span class="hero__minicard__label">Centro Oviedo</span>
+          <div class="hero__minicard__title">CC Salesas · Planta 0</div>
+          <div class="hero__minicard__sub"><i class="fa-solid fa-phone" style="font-size:.75rem"></i> 984 019 079 · sin cita</div>
+          <span class="hero__minicard__partner"><img src="assets/img/logo-salesas.png" alt="" width="38" height="14" aria-hidden="true"> Dentro del CC Salesas</span>
+        </div>
+        <i class="fa-solid fa-arrow-right hero__minicard__arrow"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero__wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,80 L0,32 C320,80 720,0 1080,32 C1260,48 1380,72 1440,72 L1440,80 Z"/></svg>
+  </div>
+</section>
+
+<!-- Marquee de sellos de confianza -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span class="marquee__item"><i class="fa-solid fa-hospital"></i> Homologado DGT</span>
+    <span class="marquee__sep"></span>
+    <span class="marquee__item"><i class="fa-solid fa-stethoscope"></i> Centro Sanitario · Principado de Asturias</span>
+    <span class="marquee__sep"></span>
+    <span class="marquee__item"><i class="fa-solid fa-clock"></i> Sin cita previa</span>
+    <span class="marquee__sep"></span>
+    <span class="marquee__item"><i class="fa-solid fa-square-parking"></i> Parking gratuito</span>
+    <span class="marquee__sep"></span>
+    <span class="marquee__item"><i class="fa-solid fa-bolt"></i> Tramitación inmediata</span>
+    <span class="marquee__sep"></span>
+    <span class="marquee__item"><i class="fa-solid fa-camera-retro"></i> Foto digital incluida</span>
+    <span class="marquee__sep"></span>
+    <span class="marquee__item"><i class="fa-solid fa-cart-shopping"></i> Dentro de centros comerciales</span>
+    <span class="marquee__sep"></span>
+    <span class="marquee__item"><i class="fa-solid fa-shield-halved"></i> +20 años de experiencia</span>
+    <span class="marquee__sep"></span>
+  </div>
+</div>
+
+<!-- ============ USPs ============ -->
+<section class="section section--soft" style="position:relative">
+  <div class="float-shapes" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="section__head" data-aos="fade-up">
+      <span class="section__eyebrow">Por qué Renova Express</span>
+      <h2 class="section__title">Las 4 razones por las que somos diferentes</h2>
+      <p class="section__sub">Una experiencia pensada para que renovar tu carnet sea fácil, rápido y sin contratiempos.</p>
+    </div>
+    <div class="usp-grid" data-gsap-stagger>
+      <article class="usp" data-aos="fade-up" data-aos-delay="0">
+        <div class="usp__icon"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i></div>
+        <h3>Pionero en Asturias</h3>
+        <p>Primer y único centro de reconocimientos integrado en un Centro Comercial: aprovecha el viaje.</p>
+      </article>
+      <article class="usp" data-aos="fade-up" data-aos-delay="80">
+        <div class="usp__icon"><i class="fa-solid fa-ban" aria-hidden="true"></i></div>
+        <h3>Sin cita previa</h3>
+        <p>Entras, te atendemos, sales con tu carnet renovado. Sin esperas ni reservas.</p>
+      </article>
+      <article class="usp" data-aos="fade-up" data-aos-delay="160">
+        <div class="usp__icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
+        <h3>Tramitación inmediata</h3>
+        <p>Conexión telemática con la DGT: todo en una sola visita, sin tener que volver.</p>
+      </article>
+      <article class="usp" data-aos="fade-up" data-aos-delay="240">
+        <div class="usp__icon"><i class="fa-solid fa-camera-retro" aria-hidden="true"></i></div>
+        <h3>Sin fotografía</h3>
+        <p>Te hacemos la foto digital en el momento, incluida. No tienes que traer nada.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="section" id="servicios">
+  <div class="container">
+    <div class="section__head" data-aos="fade-up">
+      <span class="section__eyebrow">Servicios homologados</span>
+      <h2 class="section__title">Reconocimientos para todo tipo de permisos</h2>
+      <p class="section__sub">Desde el carnet de conducir hasta licencias de armas, náutica, seguridad privada y certificados oficiales.</p>
+    </div>
+    <div class="services-grid">
+      <a class="service-card" href="servicios/carnet-de-conducir.html" data-tilt data-aos="fade-up">
+        <div class="service-card__icon"><i class="fa-solid fa-car"></i></div>
+        <h3>Carnet de conducir</h3>
+        <p>Renovación, obtención, canje y recuperación de puntos para todos los permisos: AM, A, B, C, D, E.</p>
+        <span class="service-card__cta">Ver detalles <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      <a class="service-card" href="servicios/licencia-armas.html" data-tilt data-aos="fade-up" data-aos-delay="60">
+        <div class="service-card__icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3>Licencia de armas</h3>
+        <p>Reconocimiento para licencias B, C, D, E, F y de aire comprimido. Validez 5 años.</p>
+        <span class="service-card__cta">Ver detalles <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      <a class="service-card" href="servicios/licencias-nauticas.html" data-tilt data-aos="fade-up" data-aos-delay="120">
+        <div class="service-card__icon"><i class="fa-solid fa-anchor"></i></div>
+        <h3>Licencias náuticas</h3>
+        <p>Licencia de Navegación (LN), PNB, PER, Patrón de Yate y Capitán de Yate.</p>
+        <span class="service-card__cta">Ver detalles <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      <a class="service-card" href="servicios/seguridad-privada.html" data-tilt data-aos="fade-up" data-aos-delay="180">
+        <div class="service-card__icon"><i class="fa-solid fa-user-shield"></i></div>
+        <h3>Seguridad privada</h3>
+        <p>Habilitación de vigilantes, escoltas, vigilantes de explosivos y guardas rurales.</p>
+        <span class="service-card__cta">Ver detalles <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      <a class="service-card" href="servicios/animales-peligrosos.html" data-tilt data-aos="fade-up">
+        <div class="service-card__icon"><i class="fa-solid fa-paw"></i></div>
+        <h3>Animales peligrosos</h3>
+        <p>Certificado para tenencia de Perros Potencialmente Peligrosos (RD 287/2002).</p>
+        <span class="service-card__cta">Ver detalles <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      <a class="service-card" href="servicios/operador-grua.html" data-tilt data-aos="fade-up" data-aos-delay="60">
+        <div class="service-card__icon"><i class="fa-solid fa-helmet-safety"></i></div>
+        <h3>Operador de grúa</h3>
+        <p>Reconocimiento para grúa torre y grúa autopropulsada según normativa vigente.</p>
+        <span class="service-card__cta">Ver detalles <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      <a class="service-card" href="servicios/certificados-deportivos.html" data-tilt data-aos="fade-up" data-aos-delay="120">
+        <div class="service-card__icon"><i class="fa-solid fa-person-running"></i></div>
+        <h3>Certificados deportivos</h3>
+        <p>Reconocimientos para federaciones deportivas, oposiciones y actividades físicas.</p>
+        <span class="service-card__cta">Ver detalles <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      <a class="service-card" href="servicios/certificados-oficiales.html" data-tilt data-aos="fade-up" data-aos-delay="180">
+        <div class="service-card__icon"><i class="fa-solid fa-clipboard-medical"></i></div>
+        <h3>Otros certificados</h3>
+        <p>Certificados oficiales: oposiciones, adopciones, estudios, residencia, manipulación.</p>
+        <span class="service-card__cta">Ver detalles <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section class="section section--soft" style="position:relative">
+  <div class="float-shapes" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="section__head" data-aos="fade-up">
+      <span class="section__eyebrow">¿Cómo funciona?</span>
+      <h2 class="section__title">Tu carnet renovado en 5 pasos</h2>
+      <p class="section__sub">Todo el proceso en una sola visita, sin papeleos ni desplazamientos a la Jefatura.</p>
+    </div>
+    <div class="timeline" data-gsap-stagger>
+      <div class="step" data-aos="fade-up">
+        <h3>Ven cuando quieras</h3>
+        <p>Sin cita previa. Pasa por cualquiera de nuestros centros en horario comercial.</p>
+      </div>
+      <div class="step" data-aos="fade-up" data-aos-delay="80">
+        <h3>Pruebas médicas</h3>
+        <p>Reconocimiento médico y psicotécnico realizado por nuestro equipo titulado.</p>
+      </div>
+      <div class="step" data-aos="fade-up" data-aos-delay="160">
+        <h3>Foto digital</h3>
+        <p>Te tomamos la fotografía en el momento. Sin coste adicional.</p>
+      </div>
+      <div class="step" data-aos="fade-up" data-aos-delay="240">
+        <h3>Tramitación DGT</h3>
+        <p>Envío telemático inmediato a la DGT desde el centro.</p>
+      </div>
+      <div class="step" data-aos="fade-up" data-aos-delay="320">
+        <h3>Permiso provisional</h3>
+        <p>Sales con el permiso provisional. El definitivo te llega a casa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTADORES ============ -->
+<section class="section section--green">
+  <div class="container counters">
+    <div data-aos="fade-up">
+      <div class="counter__num" data-countup="20" data-suffix="+">0</div>
+      <div class="counter__label">Años de experiencia</div>
+    </div>
+    <div data-aos="fade-up" data-aos-delay="80">
+      <div class="counter__num" data-countup="2">0</div>
+      <div class="counter__label">Centros en Asturias</div>
+    </div>
+    <div data-aos="fade-up" data-aos-delay="160">
+      <div class="counter__num" data-countup="50000" data-prefix="+">0</div>
+      <div class="counter__label">Reconocimientos realizados</div>
+    </div>
+    <div data-aos="fade-up" data-aos-delay="240">
+      <div class="counter__num" data-countup="100" data-suffix="%">0</div>
+      <div class="counter__label">Tramitación telemática DGT</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIOS (cargados desde Google Places API) ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section__head" data-aos="fade-up">
+      <span class="section__eyebrow"><i class="fa-brands fa-google"></i> Reseñas verificadas en Google</span>
+      <h2 class="section__title">Lo que dicen quienes ya han renovado con nosotros</h2>
+      <p class="section__sub">Reseñas reales publicadas por nuestros clientes en las fichas de Google Business Profile de Gijón y Oviedo.</p>
+    </div>
+
+    <div class="reviews-header" data-google-aggregate hidden>
+      <div class="reviews-header__logo" aria-hidden="true">G</div>
+      <div class="reviews-header__meta">
+        <div class="reviews-header__stars">★★★★★</div>
+        <div><span class="reviews-header__rating">0.0</span> <span class="reviews-header__count">cargando…</span></div>
+      </div>
+    </div>
+
+    <div class="swiper swiper-testimonials" data-aos="fade-up" data-google-reviews>
+      <div class="swiper-wrapper">
+        <!-- 4 slides skeleton mientras se carga la API. Si el endpoint no está configurado, se mantienen visibles. -->
+        <div class="swiper-slide">
+          <article class="testimonial is-loading">
+            <div class="testimonial__stars" aria-label="5 estrellas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="testimonial__text"><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton skeleton--short"></span></p>
+            <div class="testimonial__author">
+              <div class="testimonial__avatar">·</div>
+              <div>
+                <div class="testimonial__name">Conectando con Google…</div>
+                <div class="testimonial__meta">Centro Gijón</div>
+                <div class="testimonial__badge"><i class="fa-brands fa-google"></i> Reseña verificada en Google</div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="swiper-slide">
+          <article class="testimonial is-loading">
+            <div class="testimonial__stars" aria-label="5 estrellas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="testimonial__text"><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton skeleton--short"></span></p>
+            <div class="testimonial__author">
+              <div class="testimonial__avatar">·</div>
+              <div>
+                <div class="testimonial__name">Conectando con Google…</div>
+                <div class="testimonial__meta">Centro Oviedo</div>
+                <div class="testimonial__badge"><i class="fa-brands fa-google"></i> Reseña verificada en Google</div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="swiper-slide">
+          <article class="testimonial is-loading">
+            <div class="testimonial__stars" aria-label="5 estrellas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="testimonial__text"><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton skeleton--short"></span></p>
+            <div class="testimonial__author">
+              <div class="testimonial__avatar">·</div>
+              <div>
+                <div class="testimonial__name">Conectando con Google…</div>
+                <div class="testimonial__meta">Centro Gijón</div>
+                <div class="testimonial__badge"><i class="fa-brands fa-google"></i> Reseña verificada en Google</div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="swiper-slide">
+          <article class="testimonial is-loading">
+            <div class="testimonial__stars" aria-label="5 estrellas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="testimonial__text"><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton skeleton--short"></span></p>
+            <div class="testimonial__author">
+              <div class="testimonial__avatar">·</div>
+              <div>
+                <div class="testimonial__name">Conectando con Google…</div>
+                <div class="testimonial__meta">Centro Oviedo</div>
+                <div class="testimonial__badge"><i class="fa-brands fa-google"></i> Reseña verificada en Google</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="swiper-pagination" style="margin-top:1.5rem;position:static"></div>
+    </div>
+
+    <div style="text-align:center;margin-top:1rem;font-size:.85rem;color:var(--re-text-soft)">
+      <a href="https://search.google.com/local/reviews?placeid=[PLACE_ID_GIJON]" target="_blank" rel="noopener" style="color:var(--re-primary-dark);text-decoration:underline">Ver todas las reseñas en Google →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CENTROS ============ -->
+<section class="section section--soft" id="centros">
+  <div class="container">
+    <div class="section__head" data-aos="fade-up">
+      <span class="section__eyebrow">Nuestros centros</span>
+      <h2 class="section__title">Dos centros estratégicos en Asturias</h2>
+      <p class="section__sub">Ambos integrados en centros comerciales con parking gratuito y excelente acceso.</p>
+    </div>
+    <div class="centers-grid">
+      <article class="center-card" data-aos="fade-up">
+        <div class="center-card__media">
+          <img src="assets/img/ronda-roces.jpg" alt="Centro Comercial Ronda Roces (antiguo CC Ronda Roces) en Gijón donde se ubica Renova Express" loading="lazy" width="2048" height="1324">
+          <span class="center-card__badge"><i class="fa-solid fa-star"></i> Centro pionero</span>
+        </div>
+        <div class="center-card__body">
+          <h3 class="center-card__title">Centro Gijón · CC Ronda Roces</h3>
+          <div class="center-card__row"><i class="fa-solid fa-location-dot"></i><span>Carretera AS-II, 1306 · 33211 Gijón (Asturias) · Parque Comercial Ronda Roces (antiguo Alcampo)</span></div>
+          <div class="center-card__row"><i class="fa-solid fa-phone"></i><a href="tel:+34985059067"><strong>985 059 067</strong></a></div>
+          <div class="center-card__row"><i class="fa-solid fa-square-parking"></i><span>Parking gratuito del Centro Comercial</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center">
+            <span class="center-card__crc">CRC DGT C.2.5.10/6701/1</span>
+            <span class="center-card__partner"><img src="assets/img/logo-ronda-roces.png" alt="" width="24" height="24" aria-hidden="true"> Ubicado en <strong>CC Ronda Roces</strong></span>
+          </div>
+          <div class="center-card__actions">
+            <a class="btn btn--primary btn--sm" href="tel:+34985059067"><i class="fa-solid fa-phone"></i> Llamar</a>
+            <a class="btn btn--outline btn--sm" href="https://www.google.com/maps/dir/?api=1&destination=Carretera+AS-II+1306+Gij%C3%B3n" target="_blank" rel="noopener"><i class="fa-solid fa-route"></i> Cómo llegar</a>
+            <a class="btn btn--ghost btn--sm" href="centros/gijon.html">Ver centro</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="center-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="center-card__media">
+          <img src="assets/img/cc-salesas.jpg" alt="Centro Comercial Salesas en Oviedo donde se ubica Renova Express" loading="lazy" width="1600" height="1067">
+          <span class="center-card__badge"><i class="fa-solid fa-building"></i> CC Salesas</span>
+        </div>
+        <div class="center-card__body">
+          <h3 class="center-card__title">Centro Oviedo · CC Salesas</h3>
+          <div class="center-card__row"><i class="fa-solid fa-location-dot"></i><span>Calle General Elorza, 75 · Planta 0, Centro Comercial Salesas · 33001 Oviedo</span></div>
+          <div class="center-card__row"><i class="fa-solid fa-phone"></i><a href="tel:+34984019079"><strong>984 019 079</strong></a></div>
+          <div class="center-card__row"><i class="fa-solid fa-square-parking"></i><span>Parking gratuito en el exterior del CC Salesas</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center">
+            <span class="center-card__crc">CRC DGT C.2.5.10/6919/1</span>
+            <span class="center-card__partner"><img src="assets/img/logo-salesas.png" alt="" width="48" height="20" aria-hidden="true"> Ubicado en <strong>CC Salesas</strong></span>
+          </div>
+          <div class="center-card__actions">
+            <a class="btn btn--primary btn--sm" href="tel:+34984019079"><i class="fa-solid fa-phone"></i> Llamar</a>
+            <a class="btn btn--outline btn--sm" href="https://www.google.com/maps/dir/?api=1&destination=Calle+General+Elorza+75+Oviedo" target="_blank" rel="noopener"><i class="fa-solid fa-route"></i> Cómo llegar</a>
+            <a class="btn btn--ghost btn--sm" href="centros/oviedo.html">Ver centro</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CONTACTO HOME (con anti-bot) ============ -->
+<section class="section" id="contacto">
+  <div class="container">
+    <div class="section__head" data-aos="fade-up">
+      <span class="section__eyebrow"><i class="fa-solid fa-envelope-open-text"></i> Contacta con nosotros</span>
+      <h2 class="section__title">¿Tienes alguna duda? Te resolvemos al momento</h2>
+      <p class="section__sub">Llámanos, escríbenos o pásate sin cita por cualquiera de nuestros dos centros. Respondemos en horario comercial.</p>
+    </div>
+
+    <div class="home-contact" data-aos="fade-up">
+      <!-- Panel verde con datos de contacto -->
+      <aside class="home-contact__panel">
+        <h3 style="color:#fff;font-size:1.5rem">Estamos aquí para ayudarte</h3>
+        <p>Más de 20 años renovando carnets en Asturias. Sin cita previa, parking gratuito y tramitación inmediata con la DGT.</p>
+
+        <a class="home-contact__row" href="tel:+34985059067">
+          <i class="fa-solid fa-phone"></i>
+          <div>
+            <div class="home-contact__row__label">CENTRO GIJÓN</div>
+            <div class="home-contact__row__value">985 059 067</div>
+          </div>
+        </a>
+        <a class="home-contact__row" href="tel:+34984019079">
+          <i class="fa-solid fa-phone"></i>
+          <div>
+            <div class="home-contact__row__label">CENTRO OVIEDO</div>
+            <div class="home-contact__row__value">984 019 079</div>
+          </div>
+        </a>
+        <a class="home-contact__row" href="mailto:crcrenovaexpress@gmail.com">
+          <i class="fa-solid fa-envelope"></i>
+          <div>
+            <div class="home-contact__row__label">EMAIL</div>
+            <div class="home-contact__row__value">crcrenovaexpress@gmail.com</div>
+          </div>
+        </a>
+        <a class="home-contact__row" href="https://wa.me/34985059067" target="_blank" rel="noopener">
+          <i class="fa-brands fa-whatsapp"></i>
+          <div>
+            <div class="home-contact__row__label">WHATSAPP</div>
+            <div class="home-contact__row__value">Escríbenos por WhatsApp</div>
+          </div>
+        </a>
+      </aside>
+
+      <!-- Formulario protegido anti-bot -->
+      <div class="home-contact__form-wrap">
+        <h3 style="margin-bottom:.5rem">Envíanos un mensaje</h3>
+        <p style="color:var(--re-text-soft);font-size:.95rem;margin-bottom:1.25rem">Rellena el formulario y te responderemos por email o teléfono.</p>
+
+        <!--
+          Formulario anti-bot:
+            · honeypot oculto (campo "website") + timestamp + token JS + viewport tracking
+            · action: cambia "https://formspree.io/f/[CONFIRMAR-ID]" por tu endpoint real
+              (Formspree, Web3Forms, Netlify Forms, etc.)
+            · Cloudflare Turnstile (opcional): pega el <div class="cf-turnstile" data-sitekey="…"> aquí
+              y carga el script desde el <head>; el form solo enviará si el token está presente.
+        -->
+        <form class="form" data-protected-form
+              action="https://formspree.io/f/[CONFIRMAR-ID]"
+              method="POST" novalidate>
+
+          <!-- Honeypot invisible para humanos, irresistible para bots -->
+          <div class="hp-field" aria-hidden="true">
+            <label>No rellenes este campo: <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          </div>
+
+          <div class="form__row">
+            <div class="form__group">
+              <label for="hc-name">Nombre y apellidos *</label>
+              <input type="text" id="hc-name" name="nombreyapellidos" required autocomplete="name">
+            </div>
+            <div class="form__group">
+              <label for="hc-phone">Teléfono</label>
+              <input type="tel" id="hc-phone" name="telefono" autocomplete="tel" pattern="[0-9 +()-]{6,}">
+            </div>
+          </div>
+
+          <div class="form__group">
+            <label for="hc-email">Email *</label>
+            <input type="email" id="hc-email" name="email" required autocomplete="email">
+          </div>
+
+          <div class="form__row">
+            <div class="form__group">
+              <label for="hc-center">Centro preferido</label>
+              <select id="hc-center" name="centro">
+                <option value="">Cualquiera</option>
+                <option value="gijon">Gijón · CC Ronda Roces</option>
+                <option value="oviedo">Oviedo · CC Salesas</option>
+              </select>
+            </div>
+            <div class="form__group">
+              <label for="hc-service">Servicio</label>
+              <select id="hc-service" name="servicio">
+                <option value="">Selecciona…</option>
+                <option>Carnet de conducir</option>
+                <option>Licencia de armas</option>
+                <option>Licencia náutica</option>
+                <option>Seguridad privada</option>
+                <option>Animales peligrosos (PPP)</option>
+                <option>Operador de grúa</option>
+                <option>Certificado deportivo</option>
+                <option>Otros certificados</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form__group">
+            <label for="hc-msg">Mensaje *</label>
+            <textarea id="hc-msg" name="mensaje" required placeholder="Escribe aquí tu consulta…"></textarea>
+          </div>
+
+          <label class="form__check">
+            <input type="checkbox" name="consentimiento" value="1" required>
+            <span>He leído y acepto la <a href="legal/politica-privacidad.html">política de privacidad</a> y el tratamiento de mis datos para responder a mi consulta. *</span>
+          </label>
+
+          <!-- Cloudflare Turnstile (opcional, gratuito, sin Google).
+               Reemplaza el data-sitekey por tu clave real desde dash.cloudflare.com → Turnstile.
+          <div class="cf-turnstile" data-sitekey="[CONFIRMAR-TURNSTILE-SITEKEY]" data-theme="light"></div>
+          -->
+
+          <button type="submit" class="btn btn--primary"><i class="fa-solid fa-paper-plane"></i> Enviar mensaje</button>
+          <p class="form__status" role="status" aria-live="polite"></p>
+
+          <p style="font-size:.78rem;color:var(--re-text-soft);margin-top:.5rem">
+            <i class="fa-solid fa-shield-halved"></i> Protegido con detección anti-bots. Tus datos se tratan conforme al RGPD; no los compartimos con terceros.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="section">
+  <div class="container">
+    <div class="cta-banner" data-aos="zoom-in">
+      <h2>¿Listo para renovar tu carnet?</h2>
+      <p>Sin cita previa · Sin foto · Tramitación inmediata con la DGT</p>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn--primary btn--lg" href="tel:+34985059067"><i class="fa-solid fa-phone"></i> Gijón · 985 059 067</a>
+        <a class="btn btn--outline btn--lg" href="tel:+34984019079"><i class="fa-solid fa-phone"></i> Oviedo · 984 019 079</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer__grid">
+    <div>
+      <img src="assets/img/logo-renovaexpress-blanco.png" alt="Renova Express" class="footer__brand-img" width="220" height="52">
+      <p class="footer__desc">Centro de Reconocimiento de Conductores homologado por la DGT en Asturias. Renova Express Psicotécnicos S.L.</p>
+      <div class="footer__seals">
+        <span class="footer__seal">Homologado DGT</span>
+        <span class="footer__seal">Consejería de Sanidad del Principado</span>
+        <span class="footer__seal">RGPD · LSSI-CE</span>
+      </div>
+      <div class="footer__social">
+        <a href="https://www.facebook.com/CentroRenovaExpress" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="mailto:crcrenovaexpress@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+      </div>
+    </div>
+
+    <div>
+      <h4>Servicios</h4>
+      <ul class="footer__list">
+        <li><a href="servicios/carnet-de-conducir.html">Carnet de conducir</a></li>
+        <li><a href="servicios/licencia-armas.html">Licencia de armas</a></li>
+        <li><a href="servicios/licencias-nauticas.html">Licencias náuticas</a></li>
+        <li><a href="servicios/seguridad-privada.html">Seguridad privada</a></li>
+        <li><a href="servicios/animales-peligrosos.html">Animales peligrosos (PPP)</a></li>
+        <li><a href="servicios/operador-grua.html">Operador de grúa</a></li>
+        <li><a href="servicios/certificados-deportivos.html">Certificados deportivos</a></li>
+        <li><a href="servicios/certificados-oficiales.html">Otros certificados</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Centros</h4>
+      <ul class="footer__list">
+        <li><i class="fa-solid fa-location-dot"></i> Carretera AS-II, 1306<br>33211 Gijón<br><a href="tel:+34985059067">985 059 067</a></li>
+        <li style="margin-top:.85rem"><i class="fa-solid fa-location-dot"></i> C/ General Elorza, 75<br>CC Salesas · 33001 Oviedo<br><a href="tel:+34984019079">984 019 079</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Información</h4>
+      <ul class="footer__list">
+        <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
+        <li><a href="faq.html">Preguntas frecuentes</a></li>
+        <li><a href="blog/index.html">Blog</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="cita-previa.html">Cita previa</a></li>
+        <li><a href="legal/aviso-legal.html">Aviso legal</a></li>
+        <li><a href="legal/politica-privacidad.html">Política de privacidad</a></li>
+        <li><a href="legal/politica-cookies.html">Política de cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <span>© <span data-year>2026</span> Renova Express Psicotécnicos S.L. · Todos los derechos reservados</span>
+    <span>Sede social: C/ Antonio Cabanilles, 31, 4D, 33205 Gijón · <a href="mailto:crcrenovaexpress@gmail.com" style="color:#B8C5CD">crcrenovaexpress@gmail.com</a></span>
+  </div>
+</footer>
+
+<!-- WhatsApp flotante -->
+<a class="wa-float" href="https://wa.me/34985059067" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp [CONFIRMAR número]">
+  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+</a>
+
+<!-- Cookie banner -->
+<aside class="cookie-banner" role="dialog" aria-labelledby="ck-title" aria-modal="false">
+  <h4 id="ck-title">Tu privacidad es importante</h4>
+  <p>Usamos cookies necesarias para el funcionamiento del sitio y, con tu consentimiento, analíticas y de marketing. Más en nuestra <a href="legal/politica-cookies.html">política de cookies</a>.</p>
+  <div class="cookie-banner__opts">
+    <label><input type="checkbox" checked disabled> Necesarias (siempre activas)</label>
+    <label><input type="checkbox" id="ck-analytics"> Analíticas</label>
+    <label><input type="checkbox" id="ck-marketing"> Marketing</label>
+  </div>
+  <div class="cookie-banner__actions">
+    <button class="btn btn--primary btn--sm" data-cookie-accept>Aceptar selección</button>
+    <button class="btn btn--ghost btn--sm" data-cookie-reject>Solo necesarias</button>
+  </div>
+</aside>
+
+<!-- ============ SCRIPTS ============ -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/countup.js@2.8.0/dist/countUp.umd.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
