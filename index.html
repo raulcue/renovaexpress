@@ -8,24 +8,48 @@
 <link rel="apple-touch-icon" href="assets/img/favicon-192.png">
 <title>Renova Express — Centro psicotécnico en Gijón y Oviedo · sin cita previa</title>
 <meta name="description" content="Centro de Reconocimiento de Conductores homologado por la DGT en Asturias. Renueva tu carnet de conducir en Gijón (CC Ronda Roces) u Oviedo (CC Salesas) sin cita previa, con parking gratuito y tramitación inmediata.">
-<meta name="theme-color" content="#007E85">
 <link rel="canonical" href="https://renovaexpress.com/">
+
+<meta name="robots" content="index,follow">
+<meta name="author" content="Renova Express Psicotécnicos S.L.">
+<meta name="publisher" content="Renova Express Psicotécnicos S.L.">
+<meta name="theme-color" content="#007E85">
+<meta http-equiv="content-language" content="es">
+<meta name="geo.region" content="ES-AS">
+<meta name="geo.placename" content="Asturias">
+<meta name="geo.position" content="43.4339;-5.8615">
+<meta name="ICBM" content="43.4339, -5.8615">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Renova Express">
+<meta property="og:title" content="Renova Express — Psicotécnicos en Gijón y Oviedo · sin cita previa">
+<meta property="og:description" content="Centro de Reconocimiento de Conductores homologado por la DGT en Asturias. Renueva tu carnet sin cita previa, con parking gratis, dentro de centro comercial.">
+<meta property="og:url" content="https://renovaexpress.com/">
+<meta property="og:image" content="https://renovaexpress.com/assets/img/servicio-conducir.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Renova Express — Psicotécnicos en Gijón y Oviedo · sin cita previa">
+<meta name="twitter:description" content="Centro de Reconocimiento de Conductores homologado por la DGT en Asturias. Renueva tu carnet sin cita previa, con parking gratis, dentro de centro comercial.">
+<meta name="twitter:image" content="https://renovaexpress.com/assets/img/servicio-conducir.jpg">
 
 <!-- Endpoint del Cloudflare Worker que proxea Google Places API.
      Sustituye la URL por la real cuando despliegues el worker.
      Si no se configura, los placeholders se quedan visibles. -->
 <meta name="reviews-endpoint" content="https://api.example.com/reviews">
 
-<!-- Open Graph / Twitter -->
-<meta property="og:type" content="website">
-<meta property="og:locale" content="es_ES">
-<meta property="og:title" content="Renova Express — Centro psicotécnico en Gijón y Oviedo">
-<meta property="og:description" content="Renueva tu carnet de conducir en Asturias sin cita previa. Tramitación inmediata con la DGT, parking gratis, dentro de centros comerciales.">
-<meta property="og:url" content="https://renovaexpress.com/">
-<meta property="og:image" content="https://renovaexpress.com/assets/img/servicio-conducir.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Renova Express — Psicotécnicos en Asturias">
-<meta name="twitter:description" content="Centro homologado DGT en Gijón y Oviedo. Sin cita previa, sin foto, en 15 minutos.">
+<!-- Preload de recursos críticos para LCP -->
+<link rel="preload" as="image" href="assets/img/caleb-whiting-bau67pJBPcA-unsplash.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/logo-renovaexpress.png">
+
+<!-- DNS prefetch para CDNs externas -->
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="//unpkg.com">
 
 <!-- Fuentes -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,7 +74,7 @@
   "@id": "https://renovaexpress.com/#organization",
   "name": "Renova Express Psicotécnicos S.L.",
   "url": "https://renovaexpress.com/",
-  "image": "https://renovaexpress.com/assets/img/og-cover.jpg",
+  "image": "https://renovaexpress.com/assets/img/logo-renovaexpress.png",
   "telephone": "+34985059067",
   "email": "crcrenovaexpress@gmail.com",
   "priceRange": "€€",
@@ -89,6 +113,75 @@
     }
   ],
   "sameAs": ["https://www.facebook.com/CentroRenovaExpress"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://renovaexpress.com/#website",
+  "url": "https://renovaexpress.com/",
+  "name": "Renova Express",
+  "description": "Centro de Reconocimiento de Conductores homologado por la DGT en Asturias",
+  "inLanguage": "es-ES",
+  "publisher": {
+    "@id": "https://renovaexpress.com/#organization"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://renovaexpress.com/?s={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://renovaexpress.com/#organization-brand",
+  "name": "Renova Express Psicotécnicos S.L.",
+  "alternateName": "Renova Express",
+  "url": "https://renovaexpress.com/",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://renovaexpress.com/assets/img/logo-renovaexpress.png",
+    "width": 1200,
+    "height": 568
+  },
+  "image": "https://renovaexpress.com/assets/img/logo-renovaexpress.png",
+  "email": "crcrenovaexpress@gmail.com",
+  "foundingDate": "2003",
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Asturias"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+34985059067",
+      "contactType": "customer service",
+      "areaServed": "ES",
+      "availableLanguage": [
+        "Spanish"
+      ],
+      "contactOption": "TollFree"
+    },
+    {
+      "@type": "ContactPoint",
+      "telephone": "+34984019079",
+      "contactType": "customer service",
+      "areaServed": "ES",
+      "availableLanguage": [
+        "Spanish"
+      ]
+    }
+  ],
+  "sameAs": [
+    "https://www.facebook.com/CentroRenovaExpress"
+  ]
 }
 </script>
 </head>
