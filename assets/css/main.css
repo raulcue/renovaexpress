@@ -847,15 +847,15 @@ p { color: var(--re-text); }
   white-space: nowrap;
   line-height: 1;
 }
+.cta-split > * + * { border-left: 2px solid #fff; }
 .cta-split__call {
   background: var(--re-accent); color: var(--re-dark);
-  flex: 1 1 55%;
+  flex: 1 1 50%;
 }
 .cta-split__call:hover { background: #ffcf1f; color: var(--re-dark); }
 .cta-split__wa {
   background: #25D366; color: #fff;
-  border-left: 2px solid #fff;
-  flex: 1 1 45%;
+  flex: 1 1 50%;
 }
 .cta-split__wa:hover { background: #1ebe5b; color: #fff; }
 .cta-split__wa i { font-size: 1.15rem; }
