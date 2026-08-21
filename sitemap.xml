@@ -131,48 +131,6 @@
       <image:title>Centro psicotécnico Oviedo · CC Salesas</image:title>
     </image:image>
   </url>
-
-  <!-- Blog -->
-  <url>
-    <loc>https://renovaexpress.com/blog/</loc>
-    <lastmod>2026-05-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://renovaexpress.com/blog/renovacion-carnet-asturias-2026.html</loc>
-    <lastmod>2026-05-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image><image:loc>https://renovaexpress.com/assets/img/servicio-conducir.jpg</image:loc></image:image>
-  </url>
-  <url>
-    <loc>https://renovaexpress.com/blog/cuanto-cuesta-psicotecnico.html</loc>
-    <lastmod>2026-05-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://renovaexpress.com/blog/licencia-armas-espana.html</loc>
-    <lastmod>2026-05-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image><image:loc>https://renovaexpress.com/assets/img/servicio-armas.jpg</image:loc></image:image>
-  </url>
-  <url>
-    <loc>https://renovaexpress.com/blog/carnet-perros-ppp.html</loc>
-    <lastmod>2026-05-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image><image:loc>https://renovaexpress.com/assets/img/servicio-animales.jpg</image:loc></image:image>
-  </url>
-  <url>
-    <loc>https://renovaexpress.com/blog/canje-carnet-extranjero.html</loc>
-    <lastmod>2026-05-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
   <!-- Legales (noindex pero accesibles vía footer; baja prioridad) -->
   <url>
     <loc>https://renovaexpress.com/legal/aviso-legal.html</loc>

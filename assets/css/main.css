@@ -827,8 +827,61 @@ p { color: var(--re-text); }
 }
 
 /* ==========================================================================
-   WhatsApp flotante
+   CTA split (mitad amarilla llamar + mitad verde WhatsApp)
    ========================================================================== */
+.cta-split {
+  display: inline-flex; overflow: hidden;
+  border-radius: 999px;
+  box-shadow: var(--re-shadow-md);
+  transition: transform .15s ease, box-shadow .25s ease;
+  min-height: 56px;
+  max-width: 100%;
+}
+.cta-split:hover { transform: translateY(-2px); box-shadow: var(--re-shadow-lg); }
+.cta-split__side {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  padding: .95rem 1.35rem;
+  font-weight: 700; font-size: .95rem;
+  text-decoration: none;
+  transition: background .2s ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+.cta-split__call {
+  background: var(--re-accent); color: var(--re-dark);
+  flex: 1 1 55%;
+}
+.cta-split__call:hover { background: #ffcf1f; color: var(--re-dark); }
+.cta-split__wa {
+  background: #25D366; color: #fff;
+  border-left: 2px solid #fff;
+  flex: 1 1 45%;
+}
+.cta-split__wa:hover { background: #1ebe5b; color: #fff; }
+.cta-split__wa i { font-size: 1.15rem; }
+@media (max-width: 480px) {
+  .cta-split__side { padding: .8rem 1rem; font-size: .88rem; }
+}
+
+/* ==========================================================================
+   WhatsApp flotante (single) + multi (Gijón + Oviedo apilados con badge)
+   ========================================================================== */
+.wa-multi {
+  position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 80;
+  display: flex; flex-direction: column; gap: 1.25rem;
+}
+.wa-multi .wa-float {
+  position: relative; bottom: auto; right: auto;
+}
+.wa-float__badge {
+  position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+  background: #fff; color: var(--re-dark);
+  font-size: .68rem; font-weight: 800; letter-spacing: .04em;
+  padding: 3px 9px; border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  white-space: nowrap; text-transform: uppercase;
+  pointer-events: none;
+}
 .wa-float {
   position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 80;
   width: 58px; height: 58px; border-radius: 50%;
@@ -937,6 +990,29 @@ p { color: var(--re-text); }
 @media (max-width: 768px) { .page-hero__grid { grid-template-columns: 1fr; } }
 .page-hero h1 { margin-bottom: 1rem; }
 .page-hero img { border-radius: var(--re-radius-lg); aspect-ratio: 4/3; object-fit: cover; box-shadow: var(--re-shadow-md); }
+
+/* Overrides de contraste para .page-hero (fondo claro).
+   Anulan los estilos white-text que las mismas clases tienen en el .hero oscuro del index. */
+.page-hero .hero__eyebrow {
+  background: rgba(0,126,133,0.10);
+  border-color: transparent;
+  color: var(--re-primary-dark);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+.page-hero .hero__eyebrow i { color: var(--re-primary); }
+.page-hero .hero__lead {
+  color: var(--re-text-soft);
+  text-shadow: none;
+}
+.page-hero .hero__ctas .btn--outline {
+  border-color: var(--re-primary);
+  color: var(--re-primary-dark);
+  background: transparent;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+.page-hero .hero__ctas .btn--outline:hover {
+  background: var(--re-primary); color: #fff;
+}
 
 .feature-list { list-style: none; padding: 0; margin: 1rem 0; }
 .feature-list li { display: flex; align-items: flex-start; gap: .65rem; padding: .55rem 0; font-size: .98rem; }

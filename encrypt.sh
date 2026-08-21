@@ -70,6 +70,28 @@ fi
 # 5. Limpiar staging
 rm -rf "$STAGE_DIR"
 
+# 6. Redirect /blog/* → home (blog eliminado, mantenemos landing por si hay bookmarks antiguos)
+mkdir -p "$OUT_DIR/blog"
+cat > "$OUT_DIR/blog/index.html" <<'REDIRECT_EOF'
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="0; url=../">
+<link rel="canonical" href="https://renovaexpress.com/">
+<meta name="robots" content="noindex,follow">
+<title>Renova Express</title>
+<style>body{font-family:system-ui,sans-serif;color:#1F3640;background:#F4F8F9;text-align:center;padding:4rem 1rem}a{color:#005F66}</style>
+</head>
+<body>
+<script>window.location.replace('../');</script>
+<h1>Renova Express</h1>
+<p>Redirigiendo… si no ocurre automáticamente, <a href="../">vuelve al inicio</a>.</p>
+</body>
+</html>
+REDIRECT_EOF
+echo "✓ Redirect /blog/ → / creado"
+
 echo ""
 echo "✅ Build cifrado en $OUT_DIR/"
 echo "📂 Estructura:"

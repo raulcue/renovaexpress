@@ -221,8 +221,7 @@
           </ul>
         </li>
         <li><a class="nav__link" href="faq.html">FAQ</a></li>
-        <li><a class="nav__link" href="blog/index.html">Blog</a></li>
-        <li><a class="nav__link" href="contacto.html">Contacto</a></li>
+<li><a class="nav__link" href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
 
@@ -287,13 +286,25 @@
       <p class="hero__lead">
         Centro psicotécnico pionero en Asturias, integrado en centro comercial. Tramitación inmediata con la DGT, parking gratuito y atención sin cita previa.
       </p>
-      <div class="hero__ctas">
-        <a class="btn btn--primary btn--lg magnetic magnetic--glow" href="tel:+34985059067" data-magnetic>
-          <i class="fa-solid fa-phone"></i> Llamar ahora · 985 059 067
-        </a>
-        <a class="btn btn--outline btn--lg magnetic" href="#contacto" data-magnetic>
-          <i class="fa-solid fa-envelope"></i> Escríbenos
-        </a>
+      <div class="hero__ctas" style="flex-direction:column;align-items:flex-start;gap:.85rem">
+        <!-- Centro Gijón — split: llamar + WhatsApp [CONFIRMAR móvil WhatsApp] -->
+        <div class="cta-split">
+          <a class="cta-split__side cta-split__call" href="tel:+34985059067">
+            <i class="fa-solid fa-phone"></i> Llámanos Gijón
+          </a>
+          <a class="cta-split__side cta-split__wa" href="https://wa.me/34985059067" target="_blank" rel="noopener" aria-label="WhatsApp Gijón">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp Gijón
+          </a>
+        </div>
+        <!-- Centro Oviedo — split: llamar + WhatsApp [CONFIRMAR móvil WhatsApp] -->
+        <div class="cta-split">
+          <a class="cta-split__side cta-split__call" href="tel:+34984019079">
+            <i class="fa-solid fa-phone"></i> Llámanos Oviedo
+          </a>
+          <a class="cta-split__side cta-split__wa" href="https://wa.me/34984019079" target="_blank" rel="noopener" aria-label="WhatsApp Oviedo">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp Oviedo
+          </a>
+        </div>
       </div>
       <div class="hero__badges" role="list">
         <div class="hero__badge"><i class="fa-solid fa-hospital"></i><span>Homologado DGT</span></div>
@@ -843,8 +854,7 @@
       <ul class="footer__list">
         <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
         <li><a href="faq.html">Preguntas frecuentes</a></li>
-        <li><a href="blog/index.html">Blog</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
+<li><a href="contacto.html">Contacto</a></li>
         <li><a href="cita-previa.html">Cita previa</a></li>
         <li><a href="legal/aviso-legal.html">Aviso legal</a></li>
         <li><a href="legal/politica-privacidad.html">Política de privacidad</a></li>
@@ -859,9 +869,16 @@
 </footer>
 
 <!-- WhatsApp flotante -->
-<a class="wa-float" href="https://wa.me/34985059067" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp [CONFIRMAR número]">
-  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
-</a>
+<div class="wa-multi">
+  <a class="wa-float" href="https://wa.me/34985059067" target="_blank" rel="noopener" aria-label="WhatsApp Gijón [CONFIRMAR móvil]">
+    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+    <span class="wa-float__badge">Gijón</span>
+  </a>
+  <a class="wa-float" href="https://wa.me/34984019079" target="_blank" rel="noopener" aria-label="WhatsApp Oviedo [CONFIRMAR móvil]">
+    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+    <span class="wa-float__badge">Oviedo</span>
+  </a>
+</div>
 
 <!-- Cookie banner -->
 <aside class="cookie-banner" role="dialog" aria-labelledby="ck-title" aria-modal="false">
