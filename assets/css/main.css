@@ -1020,6 +1020,16 @@ p { color: var(--re-text); }
   background: var(--re-primary); color: #fff;
 }
 
+/* Layout servicio con aside (calculadora, etc.) — apila en móvil */
+.service-detail-grid {
+  display: grid; gap: 3rem; align-items: start;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr);
+}
+@media (max-width: 900px) {
+  .service-detail-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .service-detail-grid > aside { position: static !important; }
+}
+
 .feature-list { list-style: none; padding: 0; margin: 1rem 0; }
 .feature-list li { display: flex; align-items: flex-start; gap: .65rem; padding: .55rem 0; font-size: .98rem; }
 .feature-list i { color: var(--re-primary); margin-top: 4px; }
