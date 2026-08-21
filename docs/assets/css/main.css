@@ -830,12 +830,12 @@ p { color: var(--re-text); }
    CTA split (mitad amarilla llamar + mitad verde WhatsApp)
    ========================================================================== */
 .cta-split {
-  display: inline-flex; overflow: hidden;
+  display: flex; overflow: hidden;
+  width: 100%; max-width: 480px;
   border-radius: 999px;
   box-shadow: var(--re-shadow-md);
   transition: transform .15s ease, box-shadow .25s ease;
   min-height: 56px;
-  max-width: 100%;
 }
 .cta-split:hover { transform: translateY(-2px); box-shadow: var(--re-shadow-lg); }
 .cta-split__side {
