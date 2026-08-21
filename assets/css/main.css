@@ -882,6 +882,12 @@ p { color: var(--re-text); }
   white-space: nowrap; text-transform: uppercase;
   pointer-events: none;
 }
+@media (max-width: 640px) {
+  .wa-multi { gap: 1.65rem; bottom: 1rem; right: 1rem; }
+  .wa-multi .wa-float { width: 50px; height: 50px; font-size: 1.5rem; }
+  .wa-float__badge { font-size: .6rem; padding: 2px 7px; bottom: -7px; }
+  .wa-float::after { inset: -4px; }
+}
 .wa-float {
   position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 80;
   width: 58px; height: 58px; border-radius: 50%;
