@@ -1094,6 +1094,27 @@ p { color: var(--re-text); }
 .home-contact__row__label { font-size: .78rem; color: rgba(255,255,255,0.7); }
 .home-contact__row__value { font-weight: 700; }
 
+/* Variante con chip WhatsApp a la derecha del teléfono */
+.home-contact__row--dual { padding: 0; overflow: hidden; gap: 0; }
+.home-contact__row__main {
+  display: flex; align-items: center; gap: .85rem;
+  padding: .85rem 1rem; flex: 1; min-width: 0;
+  color: #fff; text-decoration: none;
+  transition: background .2s ease;
+}
+.home-contact__row__main:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.home-contact__row__main i { width: 28px; color: var(--re-accent); font-size: 1.1rem; }
+.home-contact__row__wa-chip {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: 0 1.1rem; background: #25D366; color: #fff;
+  font-size: .82rem; font-weight: 700;
+  text-decoration: none; white-space: nowrap;
+  border-left: 2px solid rgba(255,255,255,0.18);
+  transition: background .2s ease;
+}
+.home-contact__row__wa-chip:hover { background: #1ebe5b; color: #fff; }
+.home-contact__row__wa-chip i { color: #fff !important; width: auto !important; font-size: 1rem !important; }
+
 .home-contact__form-wrap {
   background: var(--re-bg); border: 1px solid var(--re-border);
   border-radius: var(--re-radius-xl); padding: 2.5rem;
