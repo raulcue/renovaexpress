@@ -831,7 +831,7 @@ p { color: var(--re-text); }
    ========================================================================== */
 .cta-split {
   display: flex; overflow: hidden;
-  width: 100%; max-width: 480px;
+  width: 100%; max-width: 400px;
   border-radius: 999px;
   box-shadow: var(--re-shadow-md);
   transition: transform .15s ease, box-shadow .25s ease;
