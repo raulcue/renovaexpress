@@ -465,6 +465,11 @@ p { color: var(--re-text); }
   text-shadow: 0 1px 12px rgba(0,0,0,0.18);
 }
 .hero__ctas { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 2.25rem; }
+/* Variante: dos CTAs en horizontal en escritorio, apilados en móvil */
+.hero__ctas--row { flex-direction: row; align-items: stretch; }
+@media (max-width: 720px) {
+  .hero__ctas--row { flex-direction: column; align-items: flex-start; gap: .85rem; }
+}
 .hero__ctas .btn--primary {
   background: var(--re-accent); color: var(--re-dark);
   box-shadow: 0 10px 30px rgba(244,180,0,0.35);
