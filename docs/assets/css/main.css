@@ -918,6 +918,67 @@ p { color: var(--re-text); }
 @media (prefers-reduced-motion: reduce) { .btn-wa-ball::after { animation: none; } }
 
 /* ==========================================================================
+   Botoneras hero de SERVICIOS
+   Priorizamos WhatsApp (glow), fijo en segundo lugar. Fijo oculta numero en movil.
+   ========================================================================== */
+.cta-nocita {
+  display: inline-flex; align-items: center; gap: .55rem;
+  padding: .6rem 1.1rem; border-radius: 999px;
+  background: rgba(37,211,102,0.12); color: #0f7c3a;
+  font-weight: 700; font-size: .95rem; margin-bottom: 1.25rem;
+}
+.cta-nocita i { color: #25D366; font-size: 1rem; }
+:root[data-theme="dark"] .cta-nocita { background: rgba(37,211,102,0.18); color: #7de8a5; }
+
+.cta-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem; flex-wrap: wrap; }
+.cta-row__label {
+  font-weight: 700; min-width: 70px; color: var(--re-text);
+  display: inline-flex; align-items: center; gap: .4rem;
+}
+.cta-row__label i { color: var(--re-primary); }
+
+/* WhatsApp destacado con glow pulsante */
+.btn-wa-strong {
+  display: inline-flex; align-items: center; gap: .55rem;
+  padding: .95rem 1.6rem; border-radius: 999px;
+  background: #25D366; color: #fff; font-weight: 700; font-size: 1rem;
+  text-decoration: none; white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(37,211,102,0.45);
+  animation: wa-glow-pulse 2.6s ease-in-out infinite;
+  transition: background .2s ease, transform .15s ease;
+}
+.btn-wa-strong:hover { background: #1ebe5b; color: #fff; transform: translateY(-1px); }
+.btn-wa-strong i { font-size: 1.3rem; }
+@keyframes wa-glow-pulse {
+  0%, 100% { box-shadow: 0 6px 20px rgba(37,211,102,0.45), 0 0 0 rgba(37,211,102,0); }
+  50%      { box-shadow: 0 6px 20px rgba(37,211,102,0.45), 0 0 26px rgba(37,211,102,0.6); }
+}
+@media (prefers-reduced-motion: reduce) { .btn-wa-strong { animation: none; } }
+
+/* Telefono compacto: outline teal. Muestra numero en desktop, solo icono en movil (<640px). */
+.btn--tel {
+  display: inline-flex; align-items: center; gap: .55rem;
+  padding: .8rem 1.3rem; border-radius: 999px;
+  background: transparent; color: var(--re-primary);
+  border: 1.5px solid var(--re-primary);
+  font-weight: 600; text-decoration: none; white-space: nowrap;
+  transition: background .2s ease, color .2s ease;
+}
+.btn--tel:hover { background: var(--re-primary); color: #fff; }
+.btn--tel i { font-size: 1rem; }
+
+/* Regla global: ocultar numero de telefono fijo en movil */
+@media (max-width: 640px) {
+  .cta-phone-num { display: none; }
+  .btn--tel { padding: .8rem; width: 48px; height: 48px; justify-content: center; }
+  .btn-wa-strong .wa-label { display: none; }
+  .btn-wa-strong { padding: 0; width: 54px; height: 54px; justify-content: center; }
+  .btn-wa-strong i { font-size: 1.55rem; }
+  .cta-row__label { min-width: 0; flex-basis: 100%; margin-bottom: .25rem; }
+  .cta-row { margin-bottom: 1rem; }
+}
+
+/* ==========================================================================
    CTA split (mitad amarilla llamar + mitad verde WhatsApp)
    ========================================================================== */
 .cta-split {
