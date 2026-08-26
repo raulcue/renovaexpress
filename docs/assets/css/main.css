@@ -51,7 +51,7 @@
 /* Reset */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
 body {
   font-family: var(--re-font-body);
   color: var(--re-text);
@@ -356,6 +356,10 @@ p { color: var(--re-text); }
   .nav__wa-text { display: none; }
   .nav__wa-link { width: 38px; height: 38px; padding: 0; justify-content: center; }
   .nav__wa-link i { font-size: 1.15rem; }
+}
+/* En movil (<720px) los 2 WA del header desbordan; se ocultan (siguen accesibles en el menu lateral) */
+@media (max-width: 720px) {
+  .nav__wa-link { display: none; }
 }
 
 @media (max-width: 1024px) {
@@ -1080,6 +1084,28 @@ p { color: var(--re-text); }
     grid-template-columns: 1fr !important;
     gap: 2rem !important;
   }
+}
+
+/* Overlay pill Alcampo/Salesas sobre la foto del centro (hero + card home) */
+.center-photo { position: relative; width: 100%; }
+.center-photo > img { display: block; width: 100%; height: auto; border-radius: inherit; }
+.center-photo__pill {
+  position: absolute;
+  bottom: 1rem; right: 1rem;
+  background: rgba(255,255,255,0.97);
+  padding: .9rem 1.3rem; border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.28);
+  display: inline-flex; align-items: center; justify-content: center;
+  max-width: calc(100% - 2rem);
+}
+.center-photo__pill img { display: block; height: 42px; width: auto; max-width: 100%; }
+.center-photo__pill--sm { padding: .7rem 1rem; border-radius: 12px; bottom: .85rem; right: .85rem; }
+.center-photo__pill--sm img { height: 32px; }
+@media (max-width: 600px) {
+  .center-photo__pill { padding: .55rem .8rem; border-radius: 10px; bottom: .65rem; right: .65rem; }
+  .center-photo__pill img { height: 26px; }
+  .center-photo__pill--sm { padding: .45rem .7rem; }
+  .center-photo__pill--sm img { height: 22px; }
 }
 .page-hero h1 { margin-bottom: 1rem; }
 .page-hero img { border-radius: var(--re-radius-lg); aspect-ratio: 4/3; object-fit: cover; box-shadow: var(--re-shadow-md); }
