@@ -968,7 +968,11 @@ p { color: var(--re-text); }
 @media (max-width: 640px) {
   .wa-multi { gap: 1.65rem; bottom: 1rem; right: 1.75rem; }
   .wa-multi .wa-float { width: 50px; height: 50px; font-size: 1.5rem; }
-  .wa-float__badge { font-size: .58rem; padding: 2px 6px; bottom: -7px; letter-spacing: .02em; }
+  /* Badge siempre pegado al borde derecho del ball para no desbordar el viewport */
+  .wa-float__badge {
+    font-size: .58rem; padding: 2px 6px; bottom: -7px; letter-spacing: .02em;
+    right: 0; left: auto; transform: none;
+  }
   .wa-float::after { inset: -4px; }
   .wa-float { right: 1.5rem; }
 }
