@@ -34,15 +34,22 @@
     mobileBackdrop?.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
+  const mainView = document.querySelector('[data-mobile-view="main"]');
+  const servicesView = document.querySelector('[data-mobile-view="services"]');
+  const showMain = () => { if (mainView) mainView.hidden = false; if (servicesView) servicesView.hidden = true; };
+  const showServices = () => { if (mainView) mainView.hidden = true; if (servicesView) servicesView.hidden = false; };
   const closeMobile = () => {
     mobileNav?.classList.remove('is-open');
     mobileBackdrop?.classList.remove('is-open');
     document.body.style.overflow = '';
+    showMain();
   };
   navToggle?.addEventListener('click', openMobile);
   mobileBackdrop?.addEventListener('click', closeMobile);
   mobileClose?.addEventListener('click', closeMobile);
   document.querySelectorAll('.mobile-nav__list a').forEach(a => a.addEventListener('click', closeMobile));
+  document.querySelectorAll('[data-open-services]').forEach(b => b.addEventListener('click', showServices));
+  document.querySelectorAll('[data-close-services]').forEach(b => b.addEventListener('click', showMain));
 
   /* ---------- Theme toggle (claro/oscuro) ---------- */
   const themeToggle = document.querySelector('[data-theme-toggle]');

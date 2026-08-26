@@ -391,29 +391,41 @@ p { color: var(--re-text); }
 }
 .mobile-nav__list a i { color: var(--re-primary); width: 20px; }
 
-/* Desplegable Servicios en menu movil (details/summary nativo) */
-.mobile-nav__group details { padding: 0; }
-.mobile-nav__group summary {
+/* Servicios: boton toggle al mismo nivel que los enlaces */
+.mobile-nav__toggle-btn {
+  width: 100%; text-align: left; background: transparent; border: none;
   display: flex; align-items: center; gap: .65rem;
-  padding: .9rem .25rem; font-weight: 500; color: var(--re-text);
-  cursor: pointer; list-style: none;
+  padding: .9rem .25rem; font-family: inherit; font-size: 1rem;
+  font-weight: 500; color: var(--re-text); cursor: pointer;
 }
-.mobile-nav__group summary::-webkit-details-marker { display: none; }
-.mobile-nav__group summary > i:first-child { color: var(--re-primary); width: 20px; }
-.mobile-nav__chev { margin-left: auto; font-size: .8rem; color: var(--re-text-soft); transition: transform .2s ease; }
-.mobile-nav__group details[open] .mobile-nav__chev { transform: rotate(180deg); }
-.mobile-nav__sublist {
-  list-style: none; padding: 0 0 .5rem .5rem; margin: 0;
-  border-top: 1px solid var(--re-border);
-  background: rgba(0,126,133,0.04);
+.mobile-nav__toggle-btn > i:first-child { color: var(--re-primary); width: 20px; }
+.mobile-nav__chev-r { margin-left: auto; font-size: .8rem; color: var(--re-text-soft); }
+.mobile-nav__back { color: var(--re-primary); font-weight: 600; }
+.mobile-nav__list[hidden] { display: none; }
+
+/* CTAs pie del menu movil: 4 botones homogeneos, WA verdes, tel outline */
+.mobile-nav__ctas {
+  margin-top: 1.5rem;
+  display: flex; flex-direction: column; gap: .55rem;
 }
-.mobile-nav__sublist li { border-bottom: 1px solid var(--re-border); }
-.mobile-nav__sublist li:last-child { border-bottom: none; }
-.mobile-nav__sublist a {
-  display: flex; align-items: center; gap: .65rem;
-  padding: .75rem .25rem .75rem 1rem; font-size: .92rem; font-weight: 500; color: var(--re-text);
+.mobile-nav__wa-btn,
+.mobile-nav__tel-btn {
+  width: 100%; justify-content: center;
+  border-radius: 999px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: .55rem;
 }
-.mobile-nav__sublist a i { color: var(--re-primary); width: 20px; font-size: .9rem; }
+.mobile-nav__wa-btn {
+  background: #25D366; color: #fff;
+  padding: 1rem 1.25rem; font-size: 1rem;
+  box-shadow: 0 6px 18px rgba(37,211,102,0.35);
+}
+.mobile-nav__wa-btn:hover { background: #1ebe5b; color: #fff; }
+.mobile-nav__tel-btn {
+  background: transparent; color: var(--re-primary);
+  border: 1.5px solid var(--re-primary);
+  padding: .75rem 1.25rem; font-size: .92rem;
+}
+.mobile-nav__tel-btn:hover { background: var(--re-primary); color: #fff; }
 
 /* ==========================================================================
    Botones
