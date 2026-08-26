@@ -832,16 +832,23 @@ p { color: var(--re-text); }
   font-size: .82rem; color: #8FA0AC;
 }
 
-/* Botón circular WhatsApp (bola verde solo icono) — inline con otros CTAs */
+/* Botón circular WhatsApp (bola verde solo icono, con anillo pulsante) — inline con otros CTAs */
 .btn-wa-ball {
+  position: relative;
   display: inline-grid; place-items: center;
-  width: 56px; height: 56px; border-radius: 50%;
+  width: 58px; height: 58px; border-radius: 50%;
   background: #25D366; color: #fff;
-  font-size: 1.5rem; flex-shrink: 0;
-  box-shadow: 0 6px 18px rgba(37,211,102,0.35);
+  font-size: 1.75rem; flex-shrink: 0;
+  box-shadow: 0 8px 24px rgba(37,211,102,0.45);
   transition: transform .15s ease, background .2s ease, box-shadow .25s ease;
 }
-.btn-wa-ball:hover { background: #1ebe5b; color: #fff; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(37,211,102,0.45); }
+.btn-wa-ball:hover { background: #1ebe5b; color: #fff; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37,211,102,0.55); }
+.btn-wa-ball::after {
+  content: ""; position: absolute; inset: -6px; border-radius: 50%;
+  border: 2px solid #25D366; animation: ripple 2.2s ease-out infinite;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) { .btn-wa-ball::after { animation: none; } }
 
 /* ==========================================================================
    CTA split (mitad amarilla llamar + mitad verde WhatsApp)
