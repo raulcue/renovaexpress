@@ -1037,6 +1037,14 @@ p { color: var(--re-text); }
 }
 .page-hero__grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2.5rem; align-items: center; }
 @media (max-width: 768px) { .page-hero__grid { grid-template-columns: 1fr; } }
+
+/* Colapso movil: cualquier .container con grid-template-columns inline (gijon, oviedo, cita-previa, contacto) pasa a 1 col */
+@media (max-width: 900px) {
+  .container[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+}
 .page-hero h1 { margin-bottom: 1rem; }
 .page-hero img { border-radius: var(--re-radius-lg); aspect-ratio: 4/3; object-fit: cover; box-shadow: var(--re-shadow-md); }
 
