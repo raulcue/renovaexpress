@@ -120,9 +120,37 @@
     <button class="nav__toggle"><i class="fa-solid fa-bars fa-lg"></i></button>
   </div>
 </div></header>
-<div class="mobile-nav__backdrop"></div>
-<aside class="mobile-nav"><div class="mobile-nav__head"><a href="../index.html" class="nav__brand"><img src="../assets/img/logo-renovaexpress.png" alt="Renova Express - Centro psicotécnico en Asturias" class="nav__brand-img nav__brand-img--light" width="180" height="42"><img src="../assets/img/logo-renovaexpress-blanco.png" alt="" aria-hidden="true" class="nav__brand-img nav__brand-img--dark" width="180" height="42"></a><button class="mobile-nav__close nav__icon-btn"><i class="fa-solid fa-xmark fa-lg"></i></button></div>
-  <ul class="mobile-nav__list"><li><a href="../index.html"><i class="fa-solid fa-house"></i> Inicio</a></li><li><a href="../contacto.html"><i class="fa-solid fa-envelope"></i> Contacto</a></li></ul>
+<div class="mobile-nav__backdrop" aria-hidden="true"></div>
+<aside class="mobile-nav" aria-label="Menú móvil">
+  <div class="mobile-nav__head">
+    <a href="../index.html" class="nav__brand"><img src="../assets/img/logo-renovaexpress.png" alt="Renova Express" class="nav__brand-img nav__brand-img--light" width="180" height="42"><img src="../assets/img/logo-renovaexpress-blanco.png" alt="" aria-hidden="true" class="nav__brand-img nav__brand-img--dark" width="180" height="42"></a>
+    <button class="mobile-nav__close nav__icon-btn" aria-label="Cerrar menú"><i class="fa-solid fa-xmark fa-lg"></i></button>
+  </div>
+  <ul class="mobile-nav__list" data-mobile-view="main">
+    <li><a href="../index.html"><i class="fa-solid fa-house"></i> Inicio</a></li>
+    <li><button type="button" class="mobile-nav__toggle-btn" data-open-services><i class="fa-solid fa-clipboard-list"></i> Servicios <i class="fa-solid fa-chevron-right mobile-nav__chev-r" aria-hidden="true"></i></button></li>
+    <li><a href="../centros/gijon.html"><i class="fa-solid fa-location-dot"></i> Centro Gijón</a></li>
+    <li><a href="../centros/oviedo.html"><i class="fa-solid fa-location-dot"></i> Centro Oviedo</a></li>
+    <li><a href="../contacto.html"><i class="fa-solid fa-envelope"></i> Contacto</a></li>
+    <li><a href="../cita-previa.html"><i class="fa-solid fa-calendar-check"></i> Cita previa</a></li>
+  </ul>
+  <ul class="mobile-nav__list" data-mobile-view="services" hidden>
+    <li><button type="button" class="mobile-nav__toggle-btn mobile-nav__back" data-close-services><i class="fa-solid fa-arrow-left"></i> Atrás</button></li>
+    <li><a href="../servicios/carnet-de-conducir.html"><i class="fa-solid fa-car"></i> Carnet de conducir</a></li>
+    <li><a href="../servicios/licencia-armas.html"><i class="fa-solid fa-shield-halved"></i> Licencia de armas</a></li>
+    <li><a href="../servicios/licencias-nauticas.html"><i class="fa-solid fa-anchor"></i> Licencias náuticas</a></li>
+    <li><a href="../servicios/seguridad-privada.html"><i class="fa-solid fa-user-shield"></i> Seguridad privada</a></li>
+    <li><a href="../servicios/animales-peligrosos.html"><i class="fa-solid fa-paw"></i> Animales peligrosos</a></li>
+    <li><a href="../servicios/operador-grua.html"><i class="fa-solid fa-helmet-safety"></i> Operador de grúa</a></li>
+    <li><a href="../servicios/certificados-deportivos.html"><i class="fa-solid fa-person-running"></i> Deportivos</a></li>
+    <li><a href="../servicios/certificados-oficiales.html"><i class="fa-solid fa-file-medical"></i> Otros certificados</a></li>
+  </ul>
+  <div class="mobile-nav__ctas">
+    <a class="btn mobile-nav__wa-btn" href="https://wa.me/34672799006" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp Gijón</a>
+    <a class="btn mobile-nav__tel-btn" href="tel:+34985059067"><i class="fa-solid fa-phone"></i> Gijón · 985 059 067</a>
+    <a class="btn mobile-nav__wa-btn" href="https://wa.me/34679925173" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp Oviedo</a>
+    <a class="btn mobile-nav__tel-btn" href="tel:+34984019079"><i class="fa-solid fa-phone"></i> Oviedo · 984 019 079</a>
+  </div>
 </aside>
 
 <main id="main">
