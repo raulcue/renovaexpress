@@ -832,6 +832,17 @@ p { color: var(--re-text); }
   font-size: .82rem; color: #8FA0AC;
 }
 
+/* Botón circular WhatsApp (bola verde solo icono) — inline con otros CTAs */
+.btn-wa-ball {
+  display: inline-grid; place-items: center;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #25D366; color: #fff;
+  font-size: 1.5rem; flex-shrink: 0;
+  box-shadow: 0 6px 18px rgba(37,211,102,0.35);
+  transition: transform .15s ease, background .2s ease, box-shadow .25s ease;
+}
+.btn-wa-ball:hover { background: #1ebe5b; color: #fff; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(37,211,102,0.45); }
+
 /* ==========================================================================
    CTA split (mitad amarilla llamar + mitad verde WhatsApp)
    ========================================================================== */
