@@ -1184,6 +1184,11 @@ p { color: var(--re-text); }
 }
 .page-hero h1 { margin-bottom: 1rem; }
 .page-hero img { border-radius: var(--re-radius-lg); aspect-ratio: 4/3; object-fit: cover; box-shadow: var(--re-shadow-md); }
+/* La regla de arriba esta pensada para la foto grande del hero, pero alcanza a
+   cualquier img anidada. El logo del centro comercial vive dentro de .center-photo__pill
+   y con aspect-ratio 4/3 + object-fit cover se recortaba por los lados.
+   Solo anulamos lo que sobra: la altura responsive la siguen marcando las reglas del pill. */
+.page-hero .center-photo__pill img { aspect-ratio: auto; object-fit: contain; border-radius: 0; box-shadow: none; }
 
 /* Overrides de contraste para .page-hero (fondo claro).
    Anulan los estilos white-text que las mismas clases tienen en el .hero oscuro del index. */
