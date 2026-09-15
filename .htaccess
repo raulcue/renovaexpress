@@ -80,6 +80,15 @@ RewriteRule ^(wp-admin|wp-includes|wp-content)(/|$)  - [G,L]
 RewriteRule ^(wp-login|wp-signup|wp-cron|xmlrpc|wp-trackback|wp-config)\.php$ - [G,L]
 
 # ----------------------------------------------------------------------------
+# 2b) www -> sin www
+#     Antes lo hacia WordPress (redirigia a su URL canonica). Sin WordPress hay
+#     que hacerlo aqui, o la web responde en dos dominios. Va DESPUES de las 301
+#     y los 410 a proposito: asi una URL vieja con www llega en un solo salto.
+# ----------------------------------------------------------------------------
+RewriteCond %{HTTP_HOST} ^www\.renovaexpress\.com$ [NC]
+RewriteRule ^(.*)$ https://renovaexpress.com/$1 [R=301,L]
+
+# ----------------------------------------------------------------------------
 # 3) Ajustes basicos del sitio estatico
 # ----------------------------------------------------------------------------
 DirectoryIndex index.html index.php
