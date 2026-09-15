@@ -1,0 +1,114 @@
+# ============================================================================
+# Renova Express — web estatica
+# ----------------------------------------------------------------------------
+# Sustituye al .htaccess que generaba WordPress. El original esta guardado en
+# el backup local (backupSEP15/.htaccess) por si hiciera falta volver atras.
+# ============================================================================
+
+RewriteEngine On
+
+# ----------------------------------------------------------------------------
+# 0) INTOCABLE: el WordPress de /renovacion-permisos/
+#    Tiene su propio .htaccess y es independiente. Esta regla corta el
+#    procesamiento para esa ruta, asi que NADA de lo que viene despues le afecta.
+#    No mover de aqui: tiene que ser la primera.
+# ----------------------------------------------------------------------------
+RewriteRule ^renovacion-permisos/ - [L]
+
+# ----------------------------------------------------------------------------
+# 1) Redirecciones 301 de las URLs del WordPress antiguo
+#    Conservan el posicionamiento de las paginas que Google tiene indexadas.
+#    El "/?$" acepta la URL con y sin barra final.
+# ----------------------------------------------------------------------------
+
+# Home duplicada
+RewriteRule ^inicio-2/?$                              /  [R=301,L]
+
+# Centro de Gijon
+RewriteRule ^reconocimiento-medico-gijon/?$           /centros/gijon.html  [R=301,L]
+RewriteRule ^renovar-el-carnet-de-conducir-gijon/?$   /centros/gijon.html  [R=301,L]
+
+# Centro de Oviedo
+RewriteRule ^reconocimiento-medico-oviedo/?$          /centros/oviedo.html [R=301,L]
+RewriteRule ^psicotecnicos-oviedo/?$                  /centros/oviedo.html [R=301,L]
+RewriteRule ^renovar-carnet-conducir-oviedo/?$        /centros/oviedo.html [R=301,L]
+
+# Servicios (camion y moto no tienen pagina propia: van a carnet de conducir)
+RewriteRule ^renovar-el-carnet-de-camion/?$           /servicios/carnet-de-conducir.html [R=301,L]
+RewriteRule ^psicotecnico-moto/?$                     /servicios/carnet-de-conducir.html [R=301,L]
+
+# Paginas legales
+RewriteRule ^avisos-legales/?$                        /legal/aviso-legal.html        [R=301,L]
+RewriteRule ^politicas-de-privacidad/?$               /legal/politica-privacidad.html [R=301,L]
+RewriteRule ^politicas-de-cookies/?$                  /legal/politica-cookies.html    [R=301,L]
+
+# Sitemaps que generaba All in One SEO
+RewriteRule ^(sitemap_index|page-sitemap|post-sitemap|author-sitemap)\.xml$  /sitemap.xml [R=301,L]
+
+# ----------------------------------------------------------------------------
+# 2) SPAM: 410 Gone, nunca 301
+#    Estos 11 posts de casinos los inyecto un atacante en diciembre de 2025.
+#    Un 301 le diria a Google "esto se mudo aqui" y arrastraria las senales de
+#    spam a la web nueva. El 410 dice "esto se elimino para siempre" y hace que
+#    Google los saque del indice sin vincularlos con nada.
+#    NO cambiar estos 410 por 301 ni por 404.
+# ----------------------------------------------------------------------------
+RewriteRule ^litecoin-casinoseite-ein-umfassender-leitfaden-zum-krypto-wetten/?$          - [G,L]
+RewriteRule ^the-allure-of-slot-games-an-in-depth-exploration/?$                          - [G,L]
+RewriteRule ^ruletka-gra-bonus-powitalny-poradnik-dla-graczy/?$                           - [G,L]
+RewriteRule ^roulette-low-stakes-uk-2025-everything-you-need-to-know/?$                   - [G,L]
+RewriteRule ^roulette-strategies-usa-low-volatility-maximizing-your-chances-of-winning/?$ - [G,L]
+RewriteRule ^exploring-the-globe-of-new-online-gambling-enterprises-a-comprehensive-overview/?$ - [G,L]
+RewriteRule ^roulette-with-exclusive-bonuses-india-risk-free-a-comprehensive-guide/?$     - [G,L]
+RewriteRule ^roulette-with-exclusive-bonuses-uk-high-rtp/?$                               - [G,L]
+RewriteRule ^varna-ruleta-z-bonus-ponudbo-z-brezplacnimi-vrtljaji-vse-kar-morate-vedeti/?$ - [G,L]
+RewriteRule ^alt-du-trenger-a-vite-om-innsats-live-rulett-online/?$                       - [G,L]
+RewriteRule ^the-surge-of-blackjack-crypto-gambling-enterprises-a-thorough-expedition/?$  - [G,L]
+
+# Feeds de WordPress: ya no existen
+RewriteRule ^(.*/)?feed/?$        - [G,L]
+RewriteRule ^comments/feed/?$     - [G,L]
+
+# Restos de WordPress en la raiz. Ya no hay PHP que servir, y esto corta el
+# ruido de bots que sondean /wp-login.php a todas horas.
+# (/renovacion-permisos/ ya quedo excluido en el punto 0.)
+RewriteRule ^(wp-admin|wp-includes|wp-content)(/|$)  - [G,L]
+RewriteRule ^(wp-login|wp-signup|wp-cron|xmlrpc|wp-trackback|wp-config)\.php$ - [G,L]
+
+# ----------------------------------------------------------------------------
+# 3) Ajustes basicos del sitio estatico
+# ----------------------------------------------------------------------------
+DirectoryIndex index.html index.php
+
+# Sin listados de directorio
+Options -Indexes
+
+# Paginas de error: si un dia se anade un 404.html, descomentar la linea
+# ErrorDocument 404 /404.html
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Compresion. El IfModule evita un error 500 si el modulo no esta activo.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Cache del navegador. El HTML corto (para que los cambios se vean pronto),
+# los assets largo (llevan nombre fijo, se cambian subiendo otro archivo).
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html                 "access plus 1 hour"
+  ExpiresByType text/css                  "access plus 1 month"
+  ExpiresByType application/javascript    "access plus 1 month"
+  ExpiresByType image/jpeg                "access plus 1 year"
+  ExpiresByType image/png                 "access plus 1 year"
+  ExpiresByType image/webp                "access plus 1 year"
+  ExpiresByType image/svg+xml             "access plus 1 year"
+  ExpiresByType font/woff2                "access plus 1 year"
+</IfModule>
