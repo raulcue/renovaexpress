@@ -118,9 +118,18 @@ function renova_fetch_place(string $placeId, string $apiKey): array
     ]);
     $data = json_decode($body, true);
     if ($code !== 200 || !is_array($data)) {
-        // Sin incluir la clave ni la URL: solo el código y el estado que da Google.
-        $status = is_array($data) ? ($data['error']['status'] ?? '') : '';
-        throw new RuntimeException(trim("Google HTTP $code $status"));
+        // Sin incluir la clave ni la URL: solo el código, el estado y el motivo que da
+        // Google (API_KEY_INVALID, SERVICE_DISABLED, BILLING_DISABLED...), que es lo
+        // que hace falta para saber qué falta configurar.
+        $status = is_array($data) ? (string) ($data['error']['status'] ?? '') : '';
+        $reason = '';
+        foreach (is_array($data) ? ($data['error']['details'] ?? []) : [] as $detail) {
+            if (!empty($detail['reason'])) {
+                $reason = (string) $detail['reason'];
+                break;
+            }
+        }
+        throw new RuntimeException(trim("Google HTTP $code $status $reason"));
     }
     return $data;
 }

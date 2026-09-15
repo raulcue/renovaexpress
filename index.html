@@ -37,10 +37,10 @@
 <meta name="twitter:description" content="Centro de Reconocimiento de Conductores homologado por la DGT en Asturias. Renueva tu carnet sin cita previa, con parking gratis, dentro de centro comercial.">
 <meta name="twitter:image" content="https://renovaexpress.com/assets/img/servicio-conducir.jpg">
 
-<!-- Endpoint del Cloudflare Worker que proxea Google Places API.
-     Sustituye la URL por la real cuando despliegues el worker.
-     Si no se configura, los placeholders se quedan visibles. -->
-<meta name="reviews-endpoint" content="https://api.example.com/reviews">
+<!-- Reseñas de Google: las sirve api/reviews.php en este mismo hosting
+     (ver api/README.md). Sin clave de Google responde 503 y la sección se queda
+     con las tarjetas de carga, sin romper nada. -->
+<meta name="reviews-endpoint" content="/api/reviews.php">
 <!-- Centro cuyas reseñas se muestran en esta página: "gijon" | "oviedo".
      Si se quita la etiqueta, se mezclan las de ambos centros. -->
 <meta name="reviews-center" content="gijon">
