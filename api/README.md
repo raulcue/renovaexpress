@@ -1,5 +1,31 @@
 # Renova Express — Google Reviews API
 
+> ## ✅ Vía activa: `api/reviews.php`, en el propio hosting
+>
+> Desde septiembre de 2026 las reseñas **no usan el worker de Cloudflare** descrito
+> más abajo. Las sirve `api/reviews.php`, que se despliega en
+> `renovaexpress.com/api/reviews.php` y hace el mismo trabajo sin cuenta de Cloudflare:
+>
+> - Llama a **Places API (New)** (`places.googleapis.com/v1/places/{id}`), no a la clásica.
+> - Lee la clave de `/home/renovaexpress/_config/google-places.key`, **fuera de `www/`**
+>   (el `open_basedir` del hosting lo permite; comprobado). Nunca va en el repo.
+> - Guarda la caché en esa misma carpeta, **72 h**. Si Google falla sirve la última
+>   respuesta buena; tras un fallo espera 10 min antes de reintentar.
+> - Devuelve el mismo JSON que el worker, así que `main.js` no cambia.
+> - Cabecera `X-Reviews-Cache`: `HIT` / `MISS` / `STALE`, útil para diagnosticar.
+>
+> Probado en el hosting real (PHP 7.4.33) contra un Google simulado: caché, caída de
+> Google, reintentos, formato de datos y pintado de las tarjetas en las páginas de centro.
+>
+> **Para activarlo:** subir la clave a `/_config/google-places.key`, subir
+> `api/reviews.php` a `www/api/` y cambiar el `<meta name="reviews-endpoint">` de
+> `index.html`, `centros/gijon.html` y `centros/oviedo.html` a `/api/reviews.php`.
+>
+> El worker de Cloudflare se conserva como alternativa, pero **ya no está al día**:
+> usa la Places API clásica.
+
+---
+
 Worker de Cloudflare que proxea la **Google Places API** para mostrar reseñas reales de Google en la web sin exponer la clave de API en el cliente.
 
 ## Por qué un worker y no un fetch directo

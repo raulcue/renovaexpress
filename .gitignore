@@ -44,3 +44,8 @@ build/
 # para que las cookies "Recordarme" sigan funcionando entre builds).
 # Solo ignoramos la carpeta temporal de staging.
 .staticrypt-stage/
+
+# Reseñas: nunca commitear la clave ni la caché
+api/private/
+*.key
+reviews-cache.json
