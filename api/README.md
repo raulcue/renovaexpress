@@ -12,20 +12,47 @@ La Google Places API exige clave de servidor. Si la pones en el frontend, cualqu
 
 ## Despliegue paso a paso
 
+> ⚠️ **Antes de nada: comprueba qué Places API tienes disponible.**
+>
+> `reviews-worker.js` llama al endpoint **clásico**
+> (`maps.googleapis.com/maps/api/place/details/json`), que necesita la API
+> llamada **"Places API"** a secas. La **"Places API (New)"** es un producto
+> distinto, con otro endpoint y otro formato de respuesta.
+>
+> Google restringe la API clásica en proyectos nuevos. Si al probar el worker
+> recibes `REQUEST_DENIED`, es esto: hay que reescribir `fetchPlace()` para
+> `places.googleapis.com/v1/places/{place_id}` (POST, cabecera `X-Goog-Api-Key`
+> y `X-Goog-FieldMask`). Verifícalo en el paso 5 (`wrangler dev`) antes de
+> desplegar, porque condiciona todo lo demás.
+
 ### 1. Habilita la Places API en Google Cloud
 1. Entra en https://console.cloud.google.com → crea o selecciona un proyecto.
 2. Activa **Places API (New)** en *APIs & Services → Library*.
 3. Crea una credencial → **API key**.
-4. (Recomendado) Restringe la clave por:
-   - **HTTP referrers** = `*.workers.dev` y/o tu subdominio del worker.
-   - **API restrictions** = solo Places API.
+4. Restringe la clave, pero **con cuidado**:
+   - **API restrictions** = solo Places API. ✅ Esto sí, siempre.
+   - **Application restrictions** = **Ninguna**. ⚠️
+
+   > ❌ **No pongas restricción por HTTP referrer.** Es un error fácil de cometer.
+   > Las restricciones por referrer sirven para llaves que se usan **desde el
+   > navegador**. Aquí quien llama a Google es el **worker**, desde el servidor:
+   > no manda cabecera `Referer`, así que Google rechazaría todas las peticiones
+   > con `REQUEST_DENIED` y las reseñas no cargarían nunca.
+   >
+   > Restringir por IP tampoco vale: los Workers salen por muchísimas IPs de
+   > Cloudflare y no son fijas.
+   >
+   > La clave está protegida igualmente porque vive como **secreto cifrado en
+   > Cloudflare**, nunca se expone al navegador. Para dormir tranquilo, ponle
+   > además un **límite de cuota diario** en Google Cloud
+   > (*APIs & Services → Quotas*): con caché de 12 h te sobra con 10 al día.
 
 ### 2. Encuentra los `place_id` de cada centro
 
 Usa el [Place ID Finder](https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder) o busca tu negocio en Google Maps. El ID empieza por `ChIJ…`.
 
-- Centro Gijón (Ctra. AS-II 1306) → `[CONFIRMAR]`
-- Centro Oviedo (C/ General Elorza 75) → `[CONFIRMAR]`
+- Centro Gijón (Ctra. AS-II 1306) → `ChIJiQSuiat9Ng0Rb1mwDmcZcwg`
+- Centro Oviedo (C/ General Elorza 75) → `ChIJcwg_jYqNNg0RVdkkBTnUWig`
 
 ### 3. Despliega el worker
 
@@ -106,6 +133,30 @@ Deberías recibir un JSON con `rating`, `total`, `centers` y `reviews[]`.
 ```
 
 El frontend filtra y ordena automáticamente; el worker ya filtra las reseñas de 4-5 estrellas y las ordena de más reciente a más antigua.
+
+> **Límite de Google:** la Places API devuelve **como máximo 5 reseñas por ficha**,
+> no todas las que tengas. `rating` y `user_ratings_total` sí son reales y completos,
+> así que la media y el contador son correctos; lo que se queda corto es el carrusel.
+> Por eso el enlace "Ver todas las reseñas en Google" es importante.
+
+### Reseñas por centro
+
+Cada página elige qué centro muestra con una etiqueta en el `<head>`:
+
+```html
+<meta name="reviews-center" content="gijon">   <!-- o "oviedo" -->
+```
+
+Sin esa etiqueta se mezclan las de ambos centros. Configuración actual:
+
+| Página | Centro |
+|---|---|
+| `index.html` | Gijón |
+| `centros/gijon.html` | Gijón |
+| `centros/oviedo.html` | Oviedo |
+
+El filtrado es de cliente: el worker sigue devolviendo un único JSON con los dos
+centros (una sola llamada, una sola caché) y `main.js` toma el que toque de `centers`.
 
 ## Coste estimado
 

@@ -41,6 +41,9 @@
      Sustituye la URL por la real cuando despliegues el worker.
      Si no se configura, los placeholders se quedan visibles. -->
 <meta name="reviews-endpoint" content="https://api.example.com/reviews">
+<!-- Centro cuyas reseñas se muestran en esta página: "gijon" | "oviedo".
+     Si se quita la etiqueta, se mezclan las de ambos centros. -->
+<meta name="reviews-center" content="gijon">
 
 <!-- Preload de recursos críticos para LCP -->
 <link rel="preload" as="image" href="assets/img/caleb-whiting-bau67pJBPcA-unsplash.jpg" fetchpriority="high">
@@ -525,7 +528,7 @@
     <div class="section__head" data-aos="fade-up">
       <span class="section__eyebrow"><i class="fa-brands fa-google"></i> Reseñas verificadas en Google</span>
       <h2 class="section__title">Lo que dicen quienes ya han renovado con nosotros</h2>
-      <p class="section__sub">Reseñas reales publicadas por nuestros clientes en las fichas de Google Business Profile de Gijón y Oviedo.</p>
+      <p class="section__sub">Reseñas reales publicadas por nuestros clientes en la ficha de Google Business Profile de nuestro centro de Gijón.</p>
     </div>
 
     <div class="reviews-header" data-google-aggregate hidden>
@@ -561,7 +564,7 @@
               <div class="testimonial__avatar">·</div>
               <div>
                 <div class="testimonial__name">Conectando con Google…</div>
-                <div class="testimonial__meta">Centro Oviedo</div>
+                <div class="testimonial__meta">Centro Gijón</div>
                 <div class="testimonial__badge"><i class="fa-brands fa-google"></i> Reseña verificada en Google</div>
               </div>
             </div>
@@ -589,7 +592,7 @@
               <div class="testimonial__avatar">·</div>
               <div>
                 <div class="testimonial__name">Conectando con Google…</div>
-                <div class="testimonial__meta">Centro Oviedo</div>
+                <div class="testimonial__meta">Centro Gijón</div>
                 <div class="testimonial__badge"><i class="fa-brands fa-google"></i> Reseña verificada en Google</div>
               </div>
             </div>
@@ -600,7 +603,7 @@
     </div>
 
     <div style="text-align:center;margin-top:1rem;font-size:.85rem;color:var(--re-text-soft)">
-      <a href="https://search.google.com/local/reviews?placeid=[PLACE_ID_GIJON]" target="_blank" rel="noopener" style="color:var(--re-primary-dark);text-decoration:underline">Ver todas las reseñas en Google →</a>
+      <a href="https://search.google.com/local/reviews?placeid=ChIJiQSuiat9Ng0Rb1mwDmcZcwg" target="_blank" rel="noopener" style="color:var(--re-primary-dark);text-decoration:underline">Ver todas las reseñas en Google →</a>
     </div>
   </div>
 </section>

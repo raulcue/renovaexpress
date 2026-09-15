@@ -147,30 +147,55 @@
       return;
     }
 
+    /* Cada página elige qué centro muestra con
+       <meta name="reviews-center" content="gijon|oviedo">.
+       Sin esa etiqueta se muestran las reseñas de los dos centros mezcladas. */
+    const centerKey = document.querySelector('meta[name="reviews-center"]')?.content?.trim().toLowerCase() || '';
+
     try {
       const res = await fetch(endpoint, { headers: { Accept: 'application/json' } });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      if (!Array.isArray(data.reviews) || !data.reviews.length) throw new Error('sin reseñas');
-      renderReviews(wrap, data);
+      const reviews = pickReviews(data, centerKey);
+      if (!reviews.length) throw new Error('sin reseñas');
+      renderReviews(wrap, reviews, pickAggregate(data, centerKey));
     } catch (err) {
       console.warn('[Renova Express] Reseñas Google no disponibles:', err.message);
       wrap.querySelectorAll('.testimonial.is-loading').forEach(el => el.classList.remove('is-loading'));
     }
   }
 
-  function renderReviews(wrap, data) {
+  /* El worker devuelve cada centro por separado en `centers` y, además, una lista
+     fusionada en `reviews`. Cuando la página pide un centro concreto usamos su lista
+     y le aplicamos el mismo criterio que el worker aplica a la fusionada:
+     solo 4-5 estrellas, de más reciente a más antigua. */
+  function pickReviews(data, centerKey) {
+    const own = centerKey && data.centers?.[centerKey]?.reviews;
+    if (Array.isArray(own) && own.length) {
+      return own.filter(r => (r.rating || 0) >= 4).sort((a, b) => (b.time || 0) - (a.time || 0));
+    }
+    return Array.isArray(data.reviews) ? data.reviews : [];
+  }
+
+  /* La media y el total también son los del centro pedido, no los agregados. */
+  function pickAggregate(data, centerKey) {
+    const c = centerKey && data.centers?.[centerKey];
+    if (c && typeof c.rating === 'number') return { rating: c.rating, total: c.user_ratings_total };
+    return { rating: data.rating, total: data.total };
+  }
+
+  function renderReviews(wrap, reviews, agg) {
     const aggregate = document.querySelector('[data-google-aggregate]');
-    if (aggregate && typeof data.rating === 'number') {
-      const stars = '★'.repeat(Math.round(data.rating)) + '☆'.repeat(5 - Math.round(data.rating));
+    if (aggregate && typeof agg.rating === 'number') {
+      const stars = '★'.repeat(Math.round(agg.rating)) + '☆'.repeat(5 - Math.round(agg.rating));
       aggregate.querySelector('.reviews-header__stars').textContent = stars;
-      aggregate.querySelector('.reviews-header__rating').textContent = data.rating.toFixed(1);
+      aggregate.querySelector('.reviews-header__rating').textContent = agg.rating.toFixed(1);
       aggregate.querySelector('.reviews-header__count').textContent =
-        (data.total || data.reviews.length) + ' reseñas en Google';
+        (agg.total || reviews.length) + ' reseñas en Google';
       aggregate.hidden = false;
     }
 
-    const html = data.reviews.slice(0, 8).map(r => slideHTML(r)).join('');
+    const html = reviews.slice(0, 8).map(r => slideHTML(r)).join('');
     wrap.querySelector('.swiper-wrapper').innerHTML = html;
     initTestimonialsSwiper();
   }

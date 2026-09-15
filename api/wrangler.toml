@@ -7,7 +7,9 @@ compatibility_date = "2026-01-01"
 
 # Variables no sensibles (los secretos se inyectan con `wrangler secret put`)
 [vars]
-ALLOWED_ORIGINS = "https://renovaexpress.com,https://www.renovaexpress.com"
+# Incluye el dominio de GitHub Pages para poder probar antes del cambio de DNS.
+# Cuando la web esté en el dominio definitivo puedes quitar la entrada de github.io.
+ALLOWED_ORIGINS = "https://renovaexpress.com,https://www.renovaexpress.com,https://raulcue.github.io"
 
 # Secretos a configurar:
 #   wrangler secret put GOOGLE_API_KEY

@@ -39,7 +39,11 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+<!-- Reseñas de Google: endpoint del worker y centro que muestra esta página. -->
+<meta name="reviews-endpoint" content="https://api.example.com/reviews">
+<meta name="reviews-center" content="gijon">
 <link rel="stylesheet" href="../assets/css/main.css">
 
 <script type="application/ld+json">
@@ -237,6 +241,75 @@
   </div>
 </div></section>
 
+<!-- ============ RESEÑAS DE GOOGLE (Centro Gijón) ============ -->
+<section class="section section--soft"><div class="container">
+  <div class="section__head" data-aos="fade-up">
+    <span class="section__eyebrow"><i class="fa-brands fa-google"></i> Reseñas verificadas en Google</span>
+    <h2 class="section__title">Lo que dicen nuestros clientes de Gijón</h2>
+    <p class="section__sub">Reseñas reales publicadas en la ficha de Google Business Profile de nuestro centro del CC Ronda Roces.</p>
+  </div>
+
+  <div class="reviews-header" data-google-aggregate hidden>
+    <div class="reviews-header__logo" aria-hidden="true">G</div>
+    <div class="reviews-header__meta">
+      <div class="reviews-header__stars">★★★★★</div>
+      <div><span class="reviews-header__rating">0.0</span> <span class="reviews-header__count">cargando…</span></div>
+    </div>
+  </div>
+
+  <div class="swiper swiper-testimonials" data-aos="fade-up" data-google-reviews>
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <article class="testimonial is-loading">
+            <div class="testimonial__stars" aria-label="5 estrellas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="testimonial__text"><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton skeleton--short"></span></p>
+            <div class="testimonial__author">
+              <div class="testimonial__avatar">·</div>
+              <div>
+                <div class="testimonial__name">Conectando con Google…</div>
+                <div class="testimonial__meta">Centro Gijón</div>
+                <div class="testimonial__badge"><i class="fa-brands fa-google"></i> Reseña verificada en Google</div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="swiper-slide">
+          <article class="testimonial is-loading">
+            <div class="testimonial__stars" aria-label="5 estrellas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="testimonial__text"><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton skeleton--short"></span></p>
+            <div class="testimonial__author">
+              <div class="testimonial__avatar">·</div>
+              <div>
+                <div class="testimonial__name">Conectando con Google…</div>
+                <div class="testimonial__meta">Centro Gijón</div>
+                <div class="testimonial__badge"><i class="fa-brands fa-google"></i> Reseña verificada en Google</div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="swiper-slide">
+          <article class="testimonial is-loading">
+            <div class="testimonial__stars" aria-label="5 estrellas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="testimonial__text"><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton skeleton--short"></span></p>
+            <div class="testimonial__author">
+              <div class="testimonial__avatar">·</div>
+              <div>
+                <div class="testimonial__name">Conectando con Google…</div>
+                <div class="testimonial__meta">Centro Gijón</div>
+                <div class="testimonial__badge"><i class="fa-brands fa-google"></i> Reseña verificada en Google</div>
+              </div>
+            </div>
+          </article>
+        </div>
+    </div>
+    <div class="swiper-pagination" style="margin-top:1.5rem;position:static"></div>
+  </div>
+
+  <div style="text-align:center;margin-top:1rem;font-size:.85rem;color:var(--re-text-soft)">
+    <a href="https://search.google.com/local/reviews?placeid=ChIJiQSuiat9Ng0Rb1mwDmcZcwg" target="_blank" rel="noopener" style="color:var(--re-primary-dark);text-decoration:underline">Ver todas las reseñas en Google →</a>
+  </div>
+</div></section>
+
 <section class="section"><div class="container">
   <div class="cta-banner"><h2>Te esperamos en el CC Ronda Roces Gijón</h2><p>Sin cita previa · Parking gratis · Tramitación inmediata DGT</p>
     <a class="btn btn--primary btn--lg" href="tel:+34985059067"><i class="fa-solid fa-phone"></i> Llamar ahora · 985 059 067</a>
@@ -266,6 +339,7 @@
 <div class="container footer__bottom"><span>© <span data-year>2026</span> Renova Express Psicotécnicos S.L.</span><span><a href="mailto:gijon@renovaexpress.com" style="color:#B8C5CD">gijon@renovaexpress.com</a></span></div></footer>
 <a class="wa-float" href="https://wa.me/34672799006" target="_blank" rel="noopener" aria-label="WhatsApp Gijón"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
 <script src="../assets/js/main.js" defer></script>
 </body>
 </html>
