@@ -69,6 +69,15 @@ RewriteRule ^varna-ruleta-z-bonus-ponudbo-z-brezplacnimi-vrtljaji-vse-kar-morate
 RewriteRule ^alt-du-trenger-a-vite-om-innsats-live-rulett-online/?$                       - [G,L]
 RewriteRule ^the-surge-of-blackjack-crypto-gambling-enterprises-a-thorough-expedition/?$  - [G,L]
 
+# Spam antiguo, anterior a los 11 posts de diciembre: URLs de casinos en espanol
+# que ya no existian en la base de datos pero que Google sigue teniendo indexadas
+# (se vieron en los logs: /play-casino/, /bono-mega-casino/, /tipos-de-maquinas-
+# tragaperras/, /casinos-con-bono-de-bienvenida-sin-deposito/, /da-vincis-gold-casino/).
+# La regla cubre cualquier variante, no solo las vistas. Solo afecta a rutas de un
+# unico tramo: ninguna pagina real del sitio contiene estas palabras, y las paginas
+# de servicios, centros y legal viven en subcarpetas, asi que no pueden coincidir.
+RewriteRule ^[^/]*(casino|tragaperras|tragamonedas|ruleta|ruletka|rulett|blackjack|poker|apuestas|gambling|jackpot|bingo|betting|wetten|krypto)[^/]*/?$ - [NC,G,L]
+
 # Feeds de WordPress: ya no existen
 RewriteRule ^(.*/)?feed/?$        - [G,L]
 RewriteRule ^comments/feed/?$     - [G,L]
@@ -96,8 +105,8 @@ DirectoryIndex index.html index.php
 # Sin listados de directorio
 Options -Indexes
 
-# Paginas de error: si un dia se anade un 404.html, descomentar la linea
-# ErrorDocument 404 /404.html
+# Pagina de error propia, con la cabecera y el pie del sitio.
+ErrorDocument 404 /404.html
 
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
