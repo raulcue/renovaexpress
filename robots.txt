@@ -4,7 +4,8 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /assets/js/
+# NO bloquear /assets/js/: Google necesita el JavaScript para ver la pagina
+# como la ve un visitante. Bloquearlo perjudica el posicionamiento.
 Disallow: /*.json$
 Disallow: /legal/
 
